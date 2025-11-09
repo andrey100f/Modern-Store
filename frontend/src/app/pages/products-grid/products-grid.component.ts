@@ -5,6 +5,7 @@ import {MatListItem, MatListItemTitle, MatNavList} from '@angular/material/list'
 import {RouterLink} from '@angular/router';
 import {TitleCasePipe} from '@angular/common';
 import {EcommerceStore} from '../../ecommerce-store';
+import {ToggleWishlistButtonComponent} from '../../components/toggle-wishlist-button/toggle-wishlist-button.component';
 
 @Component({
   selector: 'app-products-grid',
@@ -17,7 +18,8 @@ import {EcommerceStore} from '../../ecommerce-store';
     MatListItem,
     MatListItemTitle,
     RouterLink,
-    TitleCasePipe
+    TitleCasePipe,
+    ToggleWishlistButtonComponent
   ],
   templateUrl: './products-grid.component.html',
   styleUrl: './products-grid.component.scss',
