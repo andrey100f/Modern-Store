@@ -1,13 +1,15 @@
-import {Component, input} from '@angular/core';
+import {Component, computed, inject, input} from '@angular/core';
 import {Product} from '../../models/product.model';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {EcommerceStore} from '../../ecommerce-store';
 
 @Component({
   selector: 'app-product-card',
   imports: [
     MatButton,
-    MatIcon
+    MatIcon,
+    MatIconButton
   ],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
@@ -15,5 +17,17 @@ import {MatIcon} from '@angular/material/icon';
 export class ProductCardComponent {
 
   product = input.required<Product>();
+
+  store = inject(EcommerceStore);
+
+  isInWishlist = computed(() => this.store.wishlistItems().find(p => p.id === this.product().id));
+
+  toggleWishlist(product: Product) {
+    if (this.isInWishlist()) {
+      // remove this
+    } else {
+      this.store.addToWishlist(product);
+    }
+  }
 
 }
