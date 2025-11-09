@@ -4,6 +4,8 @@ import {computed, inject} from '@angular/core';
 import {produce} from 'immer';
 import {ToasterService} from './services/toaster.service';
 import {CartItem} from './models/cart-item.model';
+import {MatDialog} from '@angular/material/dialog';
+import {SignInDialogComponent} from './components/sign-in-dialog/sign-in-dialog.component';
 
 export type EcommerceState = {
   products: Product[];
@@ -166,7 +168,7 @@ export const EcommerceStore = signalStore(
     wishlistCount: computed(() => wishlistItems().length),
     cartCount: computed(() => cartItems().reduce((acc, item) => acc + item.quantity, 0))
   })),
-  withMethods((store, toaster = inject(ToasterService)) => ({
+  withMethods((store, toaster = inject(ToasterService), dialog = inject(MatDialog)) => ({
     setCategory: signalMethod<string>((category: string) => {
       patchState(store, { category })
     }),
@@ -241,6 +243,12 @@ export const EcommerceStore = signalStore(
     removeFromCart: (product: Product) => {
       const updatedCartItems = store.cartItems().filter(c => c.product.id !== product.id);
       patchState(store, { cartItems: updatedCartItems });
+    },
+
+    proceedToCheckout: () => {
+      dialog.open(SignInDialogComponent, {
+        disableClose: true,
+      });
     }
   }))
 );
