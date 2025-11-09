@@ -273,6 +273,10 @@ export const EcommerceStore = signalStore(
       if (checkout) {
         router.navigate(['/checkout']);
       }
+    },
+
+    signOut: () => {
+      patchState(store, { user: undefined });
     }
   }))
 );

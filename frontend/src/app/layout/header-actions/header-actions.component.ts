@@ -4,6 +4,8 @@ import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
 import {MatBadge} from '@angular/material/badge';
 import {EcommerceStore} from '../../ecommerce-store';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatDivider} from '@angular/material/divider';
 
 @Component({
   selector: 'app-header-actions',
@@ -12,7 +14,11 @@ import {EcommerceStore} from '../../ecommerce-store';
     MatIconButton,
     MatIcon,
     RouterLink,
-    MatBadge
+    MatBadge,
+    MatMenuTrigger,
+    MatMenu,
+    MatDivider,
+    MatMenuItem
   ],
   templateUrl: './header-actions.component.html',
   styleUrl: './header-actions.component.scss',
@@ -27,6 +33,14 @@ export class HeaderActionsComponent {
 
   cartCount() {
     return this.store.cartCount();
+  }
+
+  getUser() {
+    return this.store.user();
+  }
+
+  signOut() {
+    this.store.signOut();
   }
 
 }
