@@ -3,6 +3,7 @@ import {BackButtonComponent} from '../../components/back-button/back-button.comp
 import {ListCartItemsComponent} from './list-cart-items/list-cart-items.component';
 import {TeaseWishlistComponent} from './tease-wishlist/tease-wishlist.component';
 import {SummarizeOrderComponent} from '../../components/summarize-order/summarize-order.component';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-view-cart',
@@ -10,7 +11,8 @@ import {SummarizeOrderComponent} from '../../components/summarize-order/summariz
     BackButtonComponent,
     ListCartItemsComponent,
     TeaseWishlistComponent,
-    SummarizeOrderComponent
+    SummarizeOrderComponent,
+    MatButton
   ],
   templateUrl: './view-cart.component.html',
   styleUrl: './view-cart.component.scss',
