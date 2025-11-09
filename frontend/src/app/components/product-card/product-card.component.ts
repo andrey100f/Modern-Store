@@ -24,7 +24,7 @@ export class ProductCardComponent {
 
   toggleWishlist(product: Product) {
     if (this.isInWishlist()) {
-      // remove this
+      this.store.removeFromWishlist(product);
     } else {
       this.store.addToWishlist(product);
     }
