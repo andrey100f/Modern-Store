@@ -21,4 +21,12 @@ export class HeaderActionsComponent {
 
   store = inject(EcommerceStore);
 
+  wishlistCount() {
+    return this.store.wishlistCount();
+  }
+
+  cartCount() {
+    return this.store.cartCount();
+  }
+
 }
