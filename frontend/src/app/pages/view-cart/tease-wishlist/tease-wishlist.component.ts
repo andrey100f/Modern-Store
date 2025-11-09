@@ -24,4 +24,8 @@ export class TeaseWishlistComponent {
     return this.store.wishlistCount();
   }
 
+  onAddAllFromWishlistToCart() {
+    this.store.addAllWishlistToCart();
+  }
+
 }

@@ -4,6 +4,7 @@ import {QtySelectorComponent} from '../../components/qty-selector/qty-selector.c
 import {EcommerceStore} from '../../ecommerce-store';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {Product} from '../../models/product.model';
 
 @Component({
   selector: 'app-show-cart-item',
@@ -27,6 +28,14 @@ export class ShowCartItemComponent {
       quantity: newQty
     }
     this.store.setItemQuantity(updated);
+  }
+
+  onMoveToWishlist(product: Product) {
+    this.store.moveToWishlist(product);
+  }
+
+  onRemoveFromCart(product: Product) {
+    this.store.removeFromCart(product);
   }
 
 }
