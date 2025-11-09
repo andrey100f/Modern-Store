@@ -21,4 +21,12 @@ export class ShowCartItemComponent {
 
   total = computed(() => (this.item().product.price * this.item().quantity).toFixed(2));
 
+  onUpdateQty(newQty: number) {
+    const updated = {
+      productId: this.item().product.id,
+      quantity: newQty
+    }
+    this.store.setItemQuantity(updated);
+  }
+
 }
