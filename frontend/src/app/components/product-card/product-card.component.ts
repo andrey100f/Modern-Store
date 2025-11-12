@@ -3,12 +3,14 @@ import {Product} from '../../models/product.model';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {EcommerceStore} from '../../ecommerce-store';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
   imports: [
     MatButton,
-    MatIcon
+    MatIcon,
+    RouterLink
   ],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
