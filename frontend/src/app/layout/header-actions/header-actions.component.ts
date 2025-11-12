@@ -6,6 +6,9 @@ import {MatBadge} from '@angular/material/badge';
 import {EcommerceStore} from '../../ecommerce-store';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatDivider} from '@angular/material/divider';
+import {MatDialog} from '@angular/material/dialog';
+import {SignInDialogComponent} from '../../components/sign-in-dialog/sign-in-dialog.component';
+import {SignUpDialogComponent} from '../../components/sign-up-dialog/sign-up-dialog.component';
 
 @Component({
   selector: 'app-header-actions',
@@ -26,6 +29,7 @@ import {MatDivider} from '@angular/material/divider';
 export class HeaderActionsComponent {
 
   store = inject(EcommerceStore);
+  matDialog = inject(MatDialog);
 
   wishlistCount() {
     return this.store.wishlistCount();
@@ -41,6 +45,18 @@ export class HeaderActionsComponent {
 
   signOut() {
     this.store.signOut();
+  }
+
+  openSignInDialog() {
+    this.matDialog.open(SignInDialogComponent, {
+      disableClose: true
+    });
+  }
+
+  openSignUpDialog() {
+    this.matDialog.open(SignUpDialogComponent, {
+      disableClose: true
+    });
   }
 
 }

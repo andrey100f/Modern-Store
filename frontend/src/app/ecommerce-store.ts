@@ -6,7 +6,7 @@ import {ToasterService} from './services/toaster.service';
 import {CartItem} from './models/cart-item.model';
 import {MatDialog} from '@angular/material/dialog';
 import {SignInDialogComponent} from './components/sign-in-dialog/sign-in-dialog.component';
-import {SignInParams, User} from './models/user.model';
+import {SignInParams, SignUpParams, User} from './models/user.model';
 import {Router} from '@angular/router';
 
 export type EcommerceState = {
@@ -250,12 +250,17 @@ export const EcommerceStore = signalStore(
     },
 
     proceedToCheckout: () => {
-      matDialog.open(SignInDialogComponent, {
-        disableClose: true,
-        data: {
-          checkout: true
-        }
-      });
+      if (!store.user()) {
+        matDialog.open(SignInDialogComponent, {
+          disableClose: true,
+          data: {
+            checkout: true
+          }
+        });
+        return;
+      }
+
+      router.navigate(['/checkout']);
     },
 
     signIn: (params: SignInParams, checkout: boolean, dialogId: string) => {
@@ -277,6 +282,23 @@ export const EcommerceStore = signalStore(
 
     signOut: () => {
       patchState(store, { user: undefined });
-    }
+    },
+
+    signUp: (params: SignUpParams, checkout: boolean, dialogId: string) => {
+      patchState(store, {
+        user: {
+          id: '20b39217-6599-4494-b224-558d0ed1ff34',
+          email: params.email,
+          name: 'John Doe',
+          imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg'
+        }
+      });
+
+      matDialog.getDialogById(dialogId)?.close();
+
+      if (checkout) {
+        router.navigate(['/checkout']);
+      }
+    },
   }))
 );
