@@ -1,6 +1,8 @@
 package com.ubb.modernstore.products.service;
 
+import com.ubb.modernstore.products.exception.EntityNotFoundException;
 import com.ubb.modernstore.products.mapper.ProductMapper;
+import com.ubb.modernstore.products.model.Product;
 import com.ubb.modernstore.products.openapi.model.ProductCategoryEnum;
 import com.ubb.modernstore.products.openapi.model.ProductDto;
 import com.ubb.modernstore.products.repository.ProductRepository;
@@ -28,6 +30,16 @@ public class ProductService {
         return repository.findByCategory(categoryEnum).stream()
             .map(mapper::mapToDto)
             .toList();
+    }
+
+    public ProductDto getProductById(String productId) {
+        var product = getById(productId);
+        return mapper.mapToDto(product);
+    }
+
+    private Product getById(String id) {
+        return repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(Product.class.getSimpleName(), id));
     }
 
 }

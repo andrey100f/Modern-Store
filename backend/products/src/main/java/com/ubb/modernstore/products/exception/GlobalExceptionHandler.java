@@ -2,6 +2,7 @@ package com.ubb.modernstore.products.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
+@Log4j2
 public class GlobalExceptionHandler {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -20,6 +22,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleNotFound(EntityNotFoundException ex) {
+        log.error(() -> "Entity " + ex.getMessage(), ex);
         var timestamp = dateTimeFormatter.format(LocalDateTime.now());
 
         var errorResponse = ErrorResponseDto.builder()

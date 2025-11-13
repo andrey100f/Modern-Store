@@ -20,4 +20,9 @@ public class ProductController implements ProductsApi {
         return ResponseEntity.ok(service.getAllProductsByCategory(category));
     }
 
+    @Override
+    public ResponseEntity<ProductDto> getProductById(String id) {
+        return ResponseEntity.ok(service.getProductById(id));
+    }
+
 }
