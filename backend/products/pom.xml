@@ -6,27 +6,25 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.7</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.ubb.modernstore</groupId>
 	<artifactId>products</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>products</name>
-	<description>Products API for Modern Ecommerce App</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<version>${app.version}</version>
+	<name>${app.name}</name>
+	<description>${app.description}</description>
 	<properties>
+        <!-- App Info -->
+        <app.version>1.0.0</app.version>
+        <app.name>modernstore-products</app.name>
+        <app.description>Products API for Modern Ecommerce App</app.description>
+
+        <!-- OpenAPI -->
+        <springdoc-openapi-web.version>2.8.14</springdoc-openapi-web.version>
+        <jackson-databind.version>0.2.7</jackson-databind.version>
+        <springdoc.openapi-ui.version>1.8.0</springdoc.openapi-ui.version>
+        <openapi-generator.version>7.16.0</openapi-generator.version>
+
 		<java.version>25</java.version>
 	</properties>
 	<dependencies>
@@ -38,6 +36,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+        <!-- OpenAPI Dependencies -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-web.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.openapi-ui.version}</version>
+        </dependency>
 
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -82,6 +97,29 @@
 					</excludes>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/static/modernstore-products-api.yml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.ubb.modernstore.products.openapi.controller</apiPackage>
+                            <modelPackage>com.ubb.modernstore.products.openapi.model</modelPackage>
+                            <configOptions>
+                                <configHelp>true</configHelp>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useJakartaEe>true</useJakartaEe>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
