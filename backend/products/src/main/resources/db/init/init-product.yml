@@ -1,0 +1,329 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-product
+      author: andrey100f
+      changes:
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Wireless Noise-Cancelling Headphones"
+              - column:
+                  name: "description"
+                  value: "Premium wireless headphones with active noise cancellation and 30-hour battery life"
+              - column:
+                  name: "price"
+                  value: "299.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.8"
+              - column:
+                  name: "review_count"
+                  value: "6"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "ELECTRONICS"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Smart 4K TV"
+              - column:
+                  name: "description"
+                  value: "65-inch OLED Smart TV with HDR and built-in streaming apps"
+              - column:
+                  name: "price"
+                  value: "1299.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.6"
+              - column:
+                  name: "review_count"
+                  value: "6"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "ELECTRONICS"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Professional Camera"
+              - column:
+                  name: "description"
+                  value: "Mirrorless digital camera with 4K video capabilities"
+              - column:
+                  name: "price"
+                  value: "899.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.7"
+              - column:
+                  name: "review_count"
+                  value: "6"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "ELECTRONICS"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Classic Denim Jacket"
+              - column:
+                  name: "description"
+                  value: "Vintage-style denim jacket with modern fit"
+              - column:
+                  name: "price"
+                  value: "79.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.5"
+              - column:
+                  name: "review_count"
+                  value: "5"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "CLOTHING"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Cotton T-Shirt Pack"
+              - column:
+                  name: "description"
+                  value: "Set of 3 premium cotton t-shirts in essential colors"
+              - column:
+                  name: "price"
+                  value: "34.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.3"
+              - column:
+                  name: "review_count"
+                  value: "6"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "CLOTHING"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Wool Winter Coat"
+              - column:
+                  name: "description"
+                  value: "Elegant wool-blend coat perfect for cold weather"
+              - column:
+                  name: "price"
+                  value: "199.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.6"
+              - column:
+                  name: "review_count"
+                  value: "6"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "CLOTHING"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Leather Watch"
+              - column:
+                  name: "description"
+                  value: "Classic analog watch with genuine leather strap"
+              - column:
+                  name: "price"
+                  value: "149.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.7"
+              - column:
+                  name: "review_count"
+                  value: "5"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "ACCESSORIES"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Designer Sunglasses"
+              - column:
+                  name: "description"
+                  value: "UV-protected polarized sunglasses with premium frame"
+              - column:
+                  name: "price"
+                  value: "129.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.4"
+              - column:
+                  name: "review_count"
+                  value: "6"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "ACCESSORIES"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Leather Wallet"
+              - column:
+                  name: "description"
+                  value: "Handcrafted leather wallet with RFID protection"
+              - column:
+                  name: "price"
+                  value: "49.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.5"
+              - column:
+                  name: "review_count"
+                  value: "6"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "ACCESSORIES"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Smart Coffee Maker"
+              - column:
+                  name: "description"
+                  value: "WiFi-enabled coffee maker with programmable brewing"
+              - column:
+                  name: "price"
+                  value: "199.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.7"
+              - column:
+                  name: "review_count"
+                  value: "5"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "HOME"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Air Purifier"
+              - column:
+                  name: "description"
+                  value: "HEPA air purifier with air quality monitoring"
+              - column:
+                  name: "price"
+                  value: "249.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.8"
+              - column:
+                  name: "review_count"
+                  value: "5"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "HOME"
+        - insert:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "name"
+                  value: "Robot Vacuum"
+              - column:
+                  name: "description"
+                  value: "Smart robot vacuum with mapping and scheduling"
+              - column:
+                  name: "price"
+                  value: "399.99"
+              - column:
+                  name: "image_url"
+                  value: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&w=400&q=80"
+              - column:
+                  name: "rating"
+                  value: "4.6"
+              - column:
+                  name: "review_count"
+                  value: "6"
+              - column:
+                  name: "in_stock"
+                  value: "1"
+              - column:
+                  name: "category"
+                  value: "HOME"

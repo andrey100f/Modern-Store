@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-product
+      author: andrey100f
+      changes:
+        - createTable:
+            tableName: "products"
+            columns:
+              - column:
+                  name: "id"
+                  type: "VARCHAR(36)"
+                  constraints:
+                    primaryKey: true
+                  defaultValueComputed: "(UUID())"
+              - column:
+                  name: "name"
+                  type: "VARCHAR(50)"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: "description"
+                  type: "VARCHAR(255)"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: "price"
+                  type: "DOUBLE"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: "image_url"
+                  type: "VARCHAR(255)"
+              - column:
+                  name: "rating"
+                  type: "DOUBLE"
+              - column:
+                  name: "review_count"
+                  type: "INT"
+              - column:
+                  name: "in_stock"
+                  type: "BOOL"
+              - column:
+                  name: "category"
+                  type: "VARCHAR(50)"
