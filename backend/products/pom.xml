@@ -25,6 +25,12 @@
         <springdoc.openapi-ui.version>1.8.0</springdoc.openapi-ui.version>
         <openapi-generator.version>7.16.0</openapi-generator.version>
 
+        <!-- MapStruct -->
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <mapstruct-lombok-binding.version>0.2.0</mapstruct-lombok-binding.version>
+
+        <liquibase.version>5.0.1</liquibase.version>
+
 		<java.version>25</java.version>
 	</properties>
 	<dependencies>
@@ -52,6 +58,17 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${springdoc.openapi-ui.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.6.3</version>
         </dependency>
 
 		<dependency>
@@ -82,7 +99,20 @@
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>e
+                            <version>${mapstruct-lombok-binding.version}</version>
+                        </path>
 					</annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-Amapstruct.defaultComponentModel=spring</arg>
+                    </compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>
