@@ -4,10 +4,10 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'products/all'
+    redirectTo: 'products'
   },
   {
-    path: 'products/:category',
+    path: 'products',
     loadComponent: () => import('./pages/products-grid/products-grid.component'),
   },
   {
