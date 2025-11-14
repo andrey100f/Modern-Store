@@ -7,6 +7,7 @@ import {TitleCasePipe} from '@angular/common';
 import {ToggleWishlistButtonComponent} from '../../components/toggle-wishlist-button/toggle-wishlist-button.component';
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
+import {EcommerceStore} from '../../ecommerce-store';
 
 @Component({
   selector: 'app-products-grid',
@@ -29,20 +30,25 @@ export default class ProductsGridComponent implements OnInit {
 
   private _productService = inject(ProductService);
   private _route = inject(ActivatedRoute);
+  private _store = inject(EcommerceStore);
 
   protected products = signal<Product[]>([]);
-
-  category = input<string | undefined>(undefined);
-  categories = signal<string[]>(['', 'electronics', 'clothing', 'accessories', 'home']);
+  protected category = input<string | undefined>(undefined);
+  protected categories = signal<(string | undefined)[]>([undefined, 'electronics', 'clothing', 'accessories', 'home']);
 
   ngOnInit() {
-    this._route.queryParams.subscribe(params => {
-      const category = params['category'] ?? undefined;
+    this._route.queryParams.subscribe((params) => {
+      const category = params['category'];
+      this._store.setCategory(category);
       this._loadProducts(category);
     })
   }
 
-  private _loadProducts(category: string) {
+  protected getCurrentCategory() {
+    return this._store.category();
+  }
+
+  private _loadProducts(category: string | undefined) {
     this._productService.getProducts(category).subscribe(products => {
       this.products.set(products);
     });

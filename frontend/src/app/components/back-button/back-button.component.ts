@@ -15,5 +15,6 @@ import {MatIcon} from '@angular/material/icon';
 })
 export class BackButtonComponent {
   label = input<string>();
-  navigateTo = input<string>()
+  navigateTo = input<string>();
+  queryParams = input<Record<string, any> | null>();
 }

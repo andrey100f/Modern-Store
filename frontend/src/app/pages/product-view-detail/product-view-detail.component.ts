@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, OnInit, signal} from '@angular/core';
+import {Component, inject, input, OnInit, signal} from '@angular/core';
 import {EcommerceStore} from '../../ecommerce-store';
 import {Product} from '../../models/product.model';
 import {BackButtonComponent} from '../../components/back-button/back-button.component';
@@ -16,13 +16,18 @@ import {ProductService} from '../../services/product.service';
 })
 export default class ProductViewDetailComponent implements OnInit {
   private _productService = inject(ProductService);
+  private _store = inject(EcommerceStore);
 
   protected product = signal<Product | undefined>(undefined);
   protected productId = input.required<string>();
-  protected backRoute = computed(() => `/products` );
 
   ngOnInit() {
     this._loadProduct();
+  }
+
+  protected getParams() {
+    const category = this._store.category();
+    return category ? { category } : null;
   }
 
   private _loadProduct() {
