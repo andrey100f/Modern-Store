@@ -19,7 +19,7 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="bg-gray-100 p-6 h-full">
-    <h1 class="text-2xl font-bold text-gray-900 mb-1">{{ category() === '' ? 'All' : category() | titlecase }}</h1>
+    <h1 class="text-2xl font-bold text-gray-900 mb-1">{{ category() === undefined ? 'All' : category() | titlecase }}</h1>
     <p class="text-base text-gray-600 mb-6">{{ products().length }} products found</p>
 
     <div class="responsive-grid">
