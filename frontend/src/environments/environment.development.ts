@@ -1,3 +1,3 @@
 export const environment = {
-  productsApiUrl: 'http://localhost:8080/api/products',
+  productsApiUrl: 'http://modern-store.local/api/products',
 };
