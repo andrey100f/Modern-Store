@@ -21,4 +21,10 @@ export class ProductService extends BaseService{
       .pipe(catchError(this.handleError));
   }
 
+  public getProductById(productId: string): Observable<Product> {
+    const url = `${this._baseUrl}/${productId}`;
+    return this.httpClient.get<Product>(url)
+      .pipe(catchError(this.handleError));
+  }
+
 }
