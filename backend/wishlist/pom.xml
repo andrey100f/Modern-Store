@@ -14,4 +14,38 @@
     <name>wishlist</name>
     <description>Wishlist API for Modern Ecommerce App</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.ubb.modernstore</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/static/modernstore-wishlist-api.yml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.ubb.modernstore.wishlist.openapi.controller</apiPackage>
+                            <modelPackage>com.ubb.modernstore.wishlist.openapi.model</modelPackage>
+                            <configOptions>
+                                <configHelp>true</configHelp>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useJakartaEe>true</useJakartaEe>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

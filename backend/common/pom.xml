@@ -9,6 +9,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <properties>
+        <java.version>25</java.version>
+    </properties>
+
     <artifactId>common</artifactId>
     <version>1.0.0</version>
     <name>common</name>
