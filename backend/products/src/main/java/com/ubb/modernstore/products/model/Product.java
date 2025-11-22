@@ -1,6 +1,6 @@
 package com.ubb.modernstore.products.model;
 
-import com.ubb.modernstore.products.domain.id.ProductId;
+import com.ubb.modernstore.products.domain.ProductId;
 import com.ubb.modernstore.products.openapi.model.ProductCategoryEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

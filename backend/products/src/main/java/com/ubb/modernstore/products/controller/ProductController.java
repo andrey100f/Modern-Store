@@ -25,4 +25,8 @@ public class ProductController implements ProductsApi {
         return ResponseEntity.ok(service.getProductById(id));
     }
 
+    @Override
+    public ResponseEntity<List<ProductDto>> getProductsByIds(List<String> ids) {
+        return ResponseEntity.ok(service.getProductsByIds(ids));
+    }
 }

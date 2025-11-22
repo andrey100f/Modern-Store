@@ -1,4 +1,4 @@
-package com.ubb.modernstore.products.domain.id;
+package com.ubb.modernstore.products.domain;
 
 import static com.ubb.modernstore.common.domain.ErrorMessages.UTILITY_CLASS;
 

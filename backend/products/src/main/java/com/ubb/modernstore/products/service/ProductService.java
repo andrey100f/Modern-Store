@@ -37,6 +37,12 @@ public class ProductService {
         return mapper.mapToDto(product);
     }
 
+    public List<ProductDto> getProductsByIds(List<String> productIds) {
+        return repository.findByIdIn(productIds).stream()
+            .map(mapper::mapToDto)
+            .toList();
+    }
+
     private Product getById(String id) {
         return repository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(Product.class.getSimpleName(), id));
