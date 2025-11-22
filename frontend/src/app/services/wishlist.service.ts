@@ -22,7 +22,7 @@ export class WishlistService extends BaseService {
   }
 
   public removeProductFromWishlist(productId: string, userId: string = 'e6e134d7-3976-4484-aabe-71b42e8d543d'): Observable<void> {
-    return this.httpClient.delete<void>(this._baseUrl)
+    return this.httpClient.delete<void>(this._baseUrl, { body: { productId, userId } })
       .pipe(catchError(this.handleError));
   }
 
