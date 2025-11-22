@@ -1,4 +1,4 @@
-package com.ubb.modernstore.products.exception;
+package com.ubb.modernstore.common.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

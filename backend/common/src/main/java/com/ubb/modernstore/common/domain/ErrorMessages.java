@@ -1,4 +1,4 @@
-package com.ubb.modernstore.products.domain;
+package com.ubb.modernstore.common.domain;
 
 public class ErrorMessages {
 

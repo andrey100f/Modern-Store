@@ -1,4 +1,4 @@
-package com.ubb.modernstore.products.aspect;
+package com.ubb.modernstore.common.aspect;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

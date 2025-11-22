@@ -1,6 +1,6 @@
 package com.ubb.modernstore.products.service;
 
-import com.ubb.modernstore.products.exception.EntityNotFoundException;
+import com.ubb.modernstore.common.exception.EntityNotFoundException;
 import com.ubb.modernstore.products.mapper.ProductMapper;
 import com.ubb.modernstore.products.model.Product;
 import com.ubb.modernstore.products.openapi.model.ProductCategoryEnum;

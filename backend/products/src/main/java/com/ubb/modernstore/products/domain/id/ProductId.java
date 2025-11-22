@@ -1,6 +1,6 @@
 package com.ubb.modernstore.products.domain.id;
 
-import static com.ubb.modernstore.products.domain.ErrorMessages.UTILITY_CLASS;
+import static com.ubb.modernstore.common.domain.ErrorMessages.UTILITY_CLASS;
 
 public class ProductId {
 

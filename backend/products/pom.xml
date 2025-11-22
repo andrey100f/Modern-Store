@@ -14,6 +14,13 @@
 	<name>products</name>
 	<description>Products API for Modern Ecommerce App</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.ubb.modernstore</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

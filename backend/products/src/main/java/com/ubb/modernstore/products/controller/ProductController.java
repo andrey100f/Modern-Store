@@ -1,6 +1,6 @@
 package com.ubb.modernstore.products.controller;
 
-import com.ubb.modernstore.products.aspect.ApiController;
+import com.ubb.modernstore.common.aspect.ApiController;
 import com.ubb.modernstore.products.openapi.controller.ProductsApi;
 import com.ubb.modernstore.products.openapi.model.ProductDto;
 import com.ubb.modernstore.products.service.ProductService;

@@ -1,8 +1,8 @@
-package com.ubb.modernstore.products.exception;
+package com.ubb.modernstore.common.exception;
 
 import java.io.Serial;
 
-import static com.ubb.modernstore.products.domain.ErrorMessages.ENTITY_NOT_FOUND;
+import static com.ubb.modernstore.common.domain.ErrorMessages.ENTITY_NOT_FOUND;
 
 public class EntityNotFoundException extends RuntimeException {
 
