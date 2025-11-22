@@ -1,4 +1,4 @@
-package com.ubb.modernstore.products.config;
+package com.ubb.modernstore.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
