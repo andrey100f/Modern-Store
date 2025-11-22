@@ -1,7 +1,9 @@
 package com.ubb.modernstore.wishlist.service;
 
 import com.ubb.modernstore.wishlist.entity.Wishlist;
+import com.ubb.modernstore.wishlist.mapper.WishlistMapper;
 import com.ubb.modernstore.wishlist.openapi.model.ProductDto;
+import com.ubb.modernstore.wishlist.openapi.model.WishlistRequestDto;
 import com.ubb.modernstore.wishlist.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,6 +19,7 @@ import java.util.List;
 public class WishlistService {
 
     private final WishlistRepository repository;
+    private final WishlistMapper mapper;
     private final ProductsApiService productsApiService;
 
     public List<ProductDto> getWishlistProducts(String userId) {
@@ -28,6 +31,12 @@ public class WishlistService {
         }
 
         return productsApiService.getProductsByIds(productIds);
+    }
+
+    public void addProductToWishlist(WishlistRequestDto requestDto) {
+        var wishlist = mapper.mapFromRequestDtoToEntity(requestDto);
+        repository.save(wishlist);
+        log.info(() -> "Added productId " + requestDto.getProductId() + " to wishlist for userId " + requestDto.getUserId());
     }
 
     private List<String> getProductIdsByUserId(String userId) {
