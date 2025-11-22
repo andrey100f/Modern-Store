@@ -4,9 +4,28 @@ info:
   version: 1.0.0
   description: API for wishlist ecommerce store
 servers:
-  - url: http://localhost:8080/api
+  - url: http://localhost:8081/api
 paths:
   /wishlist:
+    post:
+      tags:
+        - wishlist
+      operationId: addProductToWishlist
+      summary: Add a product to the wishlist for a specific user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WishlistRequestDto'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+  /wishlist/{userId}:
     get:
       tags:
         - wishlist
@@ -28,24 +47,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ProductDto'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-    post:
-      tags:
-        - wishlist
-      operationId: addProductToWishlist
-      summary: Add a product to the wishlist for a specific user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WishlistRequestDto'
-      responses:
-        '201':
-          $ref: '#/components/responses/Created'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '5XX':
