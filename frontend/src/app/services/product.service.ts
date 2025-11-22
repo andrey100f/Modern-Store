@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../environments/environment.development';
+import {environment} from '../../environments/environment.local';
 import {catchError, Observable} from 'rxjs';
 import {Product} from '../models/product.model';
 import {BaseService} from './base-service';
