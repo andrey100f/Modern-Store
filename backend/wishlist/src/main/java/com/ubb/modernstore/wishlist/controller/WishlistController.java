@@ -28,4 +28,10 @@ public class WishlistController implements WishlistApi {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Override
+    public ResponseEntity<Void> removeProductFromWishlist(WishlistRequestDto wishlistRequestDto) {
+        service.removeProductFromWishlist(wishlistRequestDto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

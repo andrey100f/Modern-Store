@@ -25,6 +25,24 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/Unexpected'
+    delete:
+        tags:
+          - wishlist
+        operationId: removeProductFromWishlist
+        summary: Remove a product from the wishlist for a specific user
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WishlistRequestDto'
+        responses:
+          '204':
+            $ref: '#/components/responses/Ok'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '5XX':
+            $ref: '#/components/responses/Unexpected'
   /wishlist/{userId}:
     get:
       tags:

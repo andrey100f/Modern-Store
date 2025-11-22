@@ -1,5 +1,6 @@
 package com.ubb.modernstore.wishlist.service;
 
+import com.ubb.modernstore.common.exception.EntityNotFoundException;
 import com.ubb.modernstore.wishlist.entity.Wishlist;
 import com.ubb.modernstore.wishlist.mapper.WishlistMapper;
 import com.ubb.modernstore.wishlist.openapi.model.ProductDto;
@@ -39,10 +40,22 @@ public class WishlistService {
         log.info(() -> "Added productId " + requestDto.getProductId() + " to wishlist for userId " + requestDto.getUserId());
     }
 
+    public void removeProductFromWishlist(WishlistRequestDto requestDto) {
+        var wishlist = getByUserIdAndProductId(requestDto.getUserId(), requestDto.getProductId());
+        repository.delete(wishlist);
+        log.info(() -> "Removed productId " + requestDto.getProductId() + " from wishlist for userId " + requestDto.getUserId());
+    }
+
     private List<String> getProductIdsByUserId(String userId) {
         return repository.findByUserId(userId).stream()
             .map(Wishlist::getProductId)
             .toList();
+    }
+
+    private Wishlist getByUserIdAndProductId(String userId, String productId) {
+        var errorMessageParam = String.format("userId: %s, productId: %s", userId, productId);
+        return repository.findByUserIdAndProductId(userId, productId)
+            .orElseThrow(() -> new EntityNotFoundException(Wishlist.class.getSimpleName(), errorMessageParam));
     }
 
 }
