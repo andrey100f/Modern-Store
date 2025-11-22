@@ -7,6 +7,8 @@ import {MatButton, MatIconButton} from '@angular/material/button';
 import {EmptyWishlistComponent} from './empty-wishlist/empty-wishlist.component';
 import {WishlistService} from '../../services/wishlist.service';
 import {Product} from '../../models/product.model';
+import {WishlistCountService} from '../../services/wishlist-count.service';
+import {ToasterService} from '../../services/toaster.service';
 
 @Component({
   selector: 'app-my-wishlist',
@@ -24,13 +26,28 @@ import {Product} from '../../models/product.model';
 export default class MyWishlistComponent implements OnInit {
 
   private _wishlistService = inject(WishlistService);
+  private _wishlistCountService = inject(WishlistCountService);
+  private _toaster = inject(ToasterService);
 
   protected wishlistItems = signal<Product[]>([]);
   store = inject(EcommerceStore);
 
   ngOnInit(): void {
-    this._wishlistService.getWishlistProducts().subscribe(products => {
-      this.wishlistItems.set(products);
+    this._loadWishlistItems();
+  }
+
+  protected removeWishlistItem(product: Product) {
+    this._wishlistService.removeProductFromWishlist(product.id).subscribe(() => {
+      this._toaster.success('Product removed from wishlist');
+      this._loadWishlistItems();
     });
   }
+
+  private _loadWishlistItems() {
+    this._wishlistService.getWishlistProducts().subscribe(products => {
+      this.wishlistItems.set(products);
+      this._wishlistCountService.setCount(products.length);
+    });
+  }
+
 }

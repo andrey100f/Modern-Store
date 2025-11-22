@@ -9,6 +9,7 @@ import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
 import {EcommerceStore} from '../../ecommerce-store';
 import {WishlistService} from '../../services/wishlist.service';
+import {WishlistCountService} from '../../services/wishlist-count.service';
 
 @Component({
   selector: 'app-products-grid',
@@ -31,6 +32,7 @@ export default class ProductsGridComponent implements OnInit {
 
   private _productService = inject(ProductService);
   private _wishlistService = inject(WishlistService);
+  private _wishlistCountService = inject(WishlistCountService);
   private _route = inject(ActivatedRoute);
   private _store = inject(EcommerceStore);
 
@@ -61,6 +63,7 @@ export default class ProductsGridComponent implements OnInit {
   protected loadWishlistProducts() {
     this._wishlistService.getWishlistProducts().subscribe(products => {
       this.wishlistProducts.set(products);
+      this._wishlistCountService.setCount(products.length);
     });
   }
 
