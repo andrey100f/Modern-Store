@@ -6,6 +6,7 @@ import com.ubb.modernstore.wishlist.mapper.WishlistMapper;
 import com.ubb.modernstore.wishlist.openapi.model.ProductDto;
 import com.ubb.modernstore.wishlist.openapi.model.WishlistRequestDto;
 import com.ubb.modernstore.wishlist.repository.WishlistRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,19 @@ public class WishlistService {
         log.info(() -> "Removed productId " + requestDto.getProductId() + " from wishlist for userId " + requestDto.getUserId());
     }
 
+    @Transactional
+    public void clearWishlist(String userId) {
+        var wishlistItems = getIdsByUserId(userId);
+
+        if (CollectionUtils.isEmpty(wishlistItems)) {
+            log.info(() -> "No wishlist items to clear for userId " + userId);
+            return;
+        }
+
+        repository.deleteAllById(wishlistItems);
+        log.info(() -> "Cleared wishlist for userId " + userId);
+    }
+
     private List<String> getProductIdsByUserId(String userId) {
         return repository.findByUserId(userId).stream()
             .map(Wishlist::getProductId)
@@ -56,6 +70,12 @@ public class WishlistService {
         var errorMessageParam = String.format("userId: %s, productId: %s", userId, productId);
         return repository.findByUserIdAndProductId(userId, productId)
             .orElseThrow(() -> new EntityNotFoundException(Wishlist.class.getSimpleName(), errorMessageParam));
+    }
+
+    private List<String> getIdsByUserId(String userId) {
+        return repository.findByUserId(userId).stream()
+            .map(Wishlist::getId)
+            .toList();
     }
 
 }

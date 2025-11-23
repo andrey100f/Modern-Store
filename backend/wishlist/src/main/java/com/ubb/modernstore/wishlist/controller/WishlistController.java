@@ -5,6 +5,7 @@ import com.ubb.modernstore.wishlist.openapi.controller.WishlistApi;
 import com.ubb.modernstore.wishlist.openapi.model.ProductDto;
 import com.ubb.modernstore.wishlist.openapi.model.WishlistRequestDto;
 import com.ubb.modernstore.wishlist.service.WishlistService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,4 +35,9 @@ public class WishlistController implements WishlistApi {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @Override
+    public ResponseEntity<Void> clearWishlist(String userId) {
+        service.clearWishlist(userId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
