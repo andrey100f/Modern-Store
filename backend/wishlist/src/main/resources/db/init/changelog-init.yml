@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: "db/init/init-wishlist.yml"
