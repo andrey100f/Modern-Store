@@ -1,6 +1,5 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {BackButtonComponent} from '../../components/back-button/back-button.component';
-import {EcommerceStore} from '../../ecommerce-store';
 import {ProductCardComponent} from '../../components/product-card/product-card.component';
 import {MatIcon} from '@angular/material/icon';
 import {MatButton, MatIconButton} from '@angular/material/button';
@@ -30,7 +29,6 @@ export default class MyWishlistComponent implements OnInit {
   private _toaster = inject(ToasterService);
 
   protected wishlistItems = signal<Product[]>([]);
-  store = inject(EcommerceStore);
 
   ngOnInit(): void {
     this._loadWishlistItems();
@@ -40,6 +38,14 @@ export default class MyWishlistComponent implements OnInit {
     this._wishlistService.removeProductFromWishlist(product.id).subscribe(() => {
       this._toaster.success('Product removed from wishlist');
       this._loadWishlistItems();
+    });
+  }
+
+  protected clearWishlist() {
+    this._wishlistService.clearWishlist().subscribe(() => {
+      this._toaster.success('Wishlist cleared');
+      this.wishlistItems.set([]);
+      this._wishlistCountService.setCount(0);
     });
   }
 
