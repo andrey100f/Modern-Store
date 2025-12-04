@@ -31,19 +31,34 @@ extendedKeyUsage=serverAuth
 ## 5. NGINX Configuration
 Example nginx.conf:
 ```
-server {
-  listen 127.0.0.3:443 ssl;
-  server_name modern-store.local;
-  ssl_certificate cert.pem;
-  ssl_certificate_key cert-key.pem;
-  location /api/ { proxy_pass http://localhost:8080/; }
-  location / { proxy_pass http://localhost:4200/; try_files $uri $uri/ /index.html; }
+events {}
+
+http {
+    server {
+        listen 127.0.0.3:443 ssl;
+
+        server_name modern-store.local;
+
+        ssl_certificate     ssl/cert.pem;
+        ssl_certificate_key ssl/cert-key.pem;
+
+        location /api/ {
+            proxy_pass http://localhost:8080/api/;
+        }
+
+        location / {
+            proxy_pass http://localhost:4200/;
+            proxy_set_header Host $host;
+        }
+    }
+
+    server {
+        listen 127.0.0.3:S default_server;
+        server_name modern-store.local;
+        return 301 https://$server_name$request_uri;
+    }
 }
 
-server {
-  listen 127.0.0.3:80;
-  return 301 https://$host$request_uri;
-}
 ```
 
 ## 6. Running NGINX
