@@ -64,9 +64,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
+            <groupId>org.liquibase.ext</groupId>
+            <artifactId>liquibase-mongodb</artifactId>
             <version>${liquibase.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
