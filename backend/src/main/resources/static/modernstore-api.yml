@@ -6,16 +6,131 @@ info:
 servers:
   - url: http://localhost:8080/api
 paths:
-  /test:
+  /products:
     get:
       tags:
-        - test
-      operationId: testEndpoint
-      summary: Test endpoint
+        - products
+      operationId: getAllProducts
+      summary: Get all products
+      parameters:
+        - name: category
+          in: query
+          description: Filter products by category
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+  /products/{id}:
+    get:
+      tags:
+        - products
+      operationId: getProductById
+      summary: Get product by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the product to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+  /products/find-by-ids:
+    post:
+      tags:
+        - products
+      operationId: getProductsByIds
+      summary: Get products by a list of IDs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
                 type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+components:
+  schemas:
+    ProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        imageUrl:
+          type: string
+        rating:
+          type: number
+          format: float
+        reviewCount:
+          type: integer
+        inStock:
+          type: boolean
+        category:
+          $ref: '#/components/schemas/ProductCategoryEnum'
+    ProductCategoryEnum:
+      type: string
+      enum:
+        - ELECTRONICS
+        - CLOTHING
+        - ACCESSORIES
+        - HOME
+  responses:
+    Unauthorized:
+      description: Access token is missing or invalid
+    BadRequest:
+      description: The request could not be understood or was missing required parameters
+    NotFound:
+      description: Resource not found
+    Unexpected:
+      description: An unexpected error occurred
+    Created:
+      description: Resource successfully created
+    Ok:
+      description: Successful operation
