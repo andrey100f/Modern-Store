@@ -10,6 +10,7 @@ import {produce} from 'immer';
 import {
   ToggleWishlistButtonComponent
 } from '../../../components/toggle-wishlist-button/toggle-wishlist-button.component';
+import {CartService} from '../../../services/cart.service';
 
 @Component({
   selector: 'app-product-info',
@@ -26,11 +27,13 @@ import {
   styleUrl: './product-info.component.scss',
 })
 export class ProductInfoComponent {
+  private _cartService = inject(CartService);
+
   product = input.required<Product>();
   quantity = signal<number>(1);
   store = inject(EcommerceStore);
 
   onAddToCart() {
-    this.store.addToCart(this.product(), this.quantity());
+    this._cartService.addNewProductToCart(this.product().id);
   }
 }

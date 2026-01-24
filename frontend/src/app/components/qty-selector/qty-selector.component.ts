@@ -15,16 +15,14 @@ export class QtySelectorComponent {
 
   quantity = input<number>(0);
 
-  qtyUpdated = output<number>();
+  qtyUpdated = output<'ADD' | 'REMOVE'>();
 
   increaseQty() {
-    const newQty = this.quantity() + 1;
-    this.qtyUpdated.emit(newQty);
+    this.qtyUpdated.emit('ADD');
   }
 
   decreaseQty() {
-    const newQty = this.quantity() - 1;
-    this.qtyUpdated.emit(newQty);
+    this.qtyUpdated.emit('REMOVE');
   }
 
 }

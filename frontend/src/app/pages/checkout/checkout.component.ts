@@ -27,8 +27,8 @@ export default class CheckoutComponent {
     return this.store.loading();
   }
 
-  placeOrder() {
-    this.store.placeOrder();
-  }
+  // placeOrder() {
+  //   this.store.placeOrder();
+  // }
 
 }

@@ -4,6 +4,7 @@ import com.ubb.modernstore.exception.EntityNotFoundException;
 import com.ubb.modernstore.mapper.CartItemMapper;
 import com.ubb.modernstore.mapper.ProductMapper;
 import com.ubb.modernstore.model.User;
+import com.ubb.modernstore.model.embedded.CartItem;
 import com.ubb.modernstore.openapi.model.CartItemDto;
 import com.ubb.modernstore.openapi.model.ProductDto;
 import com.ubb.modernstore.repository.UserRepository;
@@ -70,6 +71,24 @@ public class UserService {
             }
         }
 
+        repository.save(user);
+    }
+
+    public void addNewProductToCart(String userId, String productId) {
+        var user = getById(userId);
+        var productDto = productService.getProductById(productId);
+        var cartItem = new CartItem();
+
+        cartItem.setProduct(productMapper.mapToModel(productDto));
+        cartItem.setQuantity(1);
+        user.getCart().add(cartItem);
+
+        repository.save(user);
+    }
+
+    public void clearProductFromCart(String userId, String productId) {
+        var user = getById(userId);
+        user.getCart().removeIf(item -> item.getProduct().getId().equals(productId));
         repository.save(user);
     }
 

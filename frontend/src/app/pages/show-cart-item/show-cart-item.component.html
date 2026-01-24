@@ -15,11 +15,15 @@
       ${{ total() }}
     </div>
     <div class="flex -me-3">
-      <button matIconButton (click)="onMoveToWishlist(item().product)">
-        <mat-icon>favorite_border</mat-icon>
-      </button>
+<!--      <button matIconButton (click)="onMoveToWishlist(item().product)">-->
+<!--        <mat-icon>favorite_border</mat-icon>-->
+<!--      </button>-->
       <button matIconButton class="danger" (click)="onRemoveFromCart(item().product)">
         <mat-icon>delete</mat-icon>
+      </button>
+
+      <button matIconButton>
+        <mat-icon>favorite_border</mat-icon>
       </button>
     </div>
   </div>

@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {SignInDialogComponent} from '../../components/sign-in-dialog/sign-in-dialog.component';
 import {SignUpDialogComponent} from '../../components/sign-up-dialog/sign-up-dialog.component';
 import {WishlistCountService} from '../../services/wishlist-count.service';
+import {CartCountService} from '../../services/cart/cart-count.service';
 
 @Component({
   selector: 'app-header-actions',
@@ -30,6 +31,7 @@ import {WishlistCountService} from '../../services/wishlist-count.service';
 export class HeaderActionsComponent {
 
   private _wishlistCountService = inject(WishlistCountService);
+  private _cartCountService = inject(CartCountService);
   store = inject(EcommerceStore);
   matDialog = inject(MatDialog);
 
@@ -38,7 +40,7 @@ export class HeaderActionsComponent {
   }
 
   cartCount() {
-    return this.store.cartCount();
+    return this._cartCountService.getCount();
   }
 
   getUser() {
