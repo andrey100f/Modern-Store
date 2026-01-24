@@ -1,0 +1,60 @@
+package com.ubb.modernstore.service;
+
+import com.ubb.modernstore.exception.EntityNotFoundException;
+import com.ubb.modernstore.mapper.CartItemMapper;
+import com.ubb.modernstore.mapper.ProductMapper;
+import com.ubb.modernstore.model.User;
+import com.ubb.modernstore.openapi.model.CartItemDto;
+import com.ubb.modernstore.openapi.model.ProductDto;
+import com.ubb.modernstore.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+    private final UserRepository repository;
+    private final ProductService productService;
+    private final ProductMapper productMapper;
+    private final CartItemMapper cartItemMapper;
+
+    public List<ProductDto> getUserWishlist(String userId) {
+        var user = getById(userId);
+        return user.getWishlist().stream()
+            .map(productMapper::mapToDto)
+            .toList();
+    }
+
+    public List<CartItemDto> getUserCart(String userId) {
+        var user = getById(userId);
+        return user.getCart().stream()
+            .map(cartItemMapper::mapToDto)
+            .toList();
+    }
+
+    public void addProductToCart(String userId, String productId) {
+        var user = getById(userId);
+        var productDto = productService.getProductById(productId);
+
+        var existingCartItem = user.getCart().stream()
+            .filter(item -> item.getProduct().getId().equals(productId))
+            .findFirst();
+
+        if (existingCartItem.isPresent()) {
+            existingCartItem.get().setQuantity(existingCartItem.get().getQuantity() + 1);
+        } else {
+            var cartItem = cartItemMapper.mapToModel(new CartItemDto().product(productDto).quantity(1));
+            user.getCart().add(cartItem);
+        }
+
+        repository.save(user);
+    }
+
+    private User getById(String id) {
+        return repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), id));
+    }
+}
