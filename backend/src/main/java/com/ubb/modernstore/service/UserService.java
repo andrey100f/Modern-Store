@@ -117,6 +117,54 @@ public class UserService {
         repository.save(user);
     }
 
+    public void moveProductFromCartToWishlist(String userId, String productId) {
+        var user = getById(userId);
+
+        var existingCartItem = user.getCart().stream()
+            .filter(item -> item.getProduct().getId().equals(productId))
+            .findFirst();
+
+        if (existingCartItem.isPresent()) {
+            var product = existingCartItem.get().getProduct();
+            user.getWishlist().add(product);
+            user.getCart().remove(existingCartItem.get());
+            repository.save(user);
+        }
+    }
+
+    public void moveProductsFromWishlistToCart(String userId, List<ProductDto> productDtos) {
+        var user = getById(userId);
+
+        productDtos.forEach(productDto -> {
+            var productId = productDto.getId();
+
+            var existingWishlistItem = user.getWishlist().stream()
+                .filter(p -> p.getId().equals(productId))
+                .findFirst();
+
+            if (existingWishlistItem.isPresent()) {
+                var product = existingWishlistItem.get();
+
+                var existingCartItem = user.getCart().stream()
+                    .filter(item -> item.getProduct().getId().equals(productId))
+                    .findFirst();
+
+                if (existingCartItem.isPresent()) {
+                    existingCartItem.get().setQuantity(existingCartItem.get().getQuantity() + 1);
+                } else {
+                    var cartItem = new CartItem();
+                    cartItem.setProduct(product);
+                    cartItem.setQuantity(1);
+                    user.getCart().add(cartItem);
+                }
+
+                user.getWishlist().remove(product);
+            }
+        });
+
+        repository.save(user);
+    }
+
     private User getById(String id) {
         return repository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), id));

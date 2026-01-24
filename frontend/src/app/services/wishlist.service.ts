@@ -31,4 +31,9 @@ export class WishlistService extends BaseService {
       .pipe(catchError(this.handleError));
   }
 
+  public moveProductsToCart(products: Product[], userId: string = 'e6e134d7-3976-4484-aabe-71b42e8d543d'): Observable<void> {
+    return this.httpClient.put<void>(`${this._baseUrl}/${userId}/wishlist/move-to-cart`, products)
+      .pipe(catchError(this.handleError));
+  }
+
 }

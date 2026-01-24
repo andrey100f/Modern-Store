@@ -69,4 +69,16 @@ public class UserController implements UsersApi {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
+    public ResponseEntity<Void> moveItemFromCartToWishlist(String userId, String productId) {
+        service.moveProductFromCartToWishlist(userId, productId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> moveItemsFromWishlistToCart(String userId, List<ProductDto> productDto) {
+        service.moveProductsFromWishlistToCart(userId, productDto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

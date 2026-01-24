@@ -22,6 +22,7 @@ export class ShowCartItemComponent {
   store = inject(EcommerceStore);
   item = input.required<CartItem>();
   cartChanged = output<boolean>();
+  wishlistChanged = output<boolean>();
 
   total = computed(() => (this.item().product.price * this.item().quantity).toFixed(2));
 
@@ -37,10 +38,13 @@ export class ShowCartItemComponent {
     }
   }
 
-  // onMoveToWishlist(product: Product) {
-  //   this.store.moveToWishlist(product);
-  // }
-  //
+  onMoveToWishlist(product: Product) {
+    this._cartService.moveProductFromCartToWishlist(product.id).subscribe(() => {
+      this.cartChanged.emit(true);
+      this.wishlistChanged.emit(true);
+    });
+  }
+
   onRemoveFromCart(product: Product) {
     this._cartService.clearProductFromCart(product.id).subscribe(() => {
       this.cartChanged.emit(true);

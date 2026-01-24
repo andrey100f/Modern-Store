@@ -7,6 +7,9 @@ import {CartService} from '../../../services/cart.service';
 import {CartCountService} from '../../../services/cart/cart-count.service';
 import {Product} from '../../../models/product.model';
 import {CartGlobalService} from '../../../services/cart/cart-global.service';
+import {WishlistService} from '../../../services/wishlist.service';
+import {WishlistCountService} from '../../../services/wishlist-count.service';
+import {CartRefreshService} from '../../../services/cart/cart-refresh.service';
 
 @Component({
   selector: 'app-list-cart-items',
@@ -19,8 +22,11 @@ import {CartGlobalService} from '../../../services/cart/cart-global.service';
 })
 export class ListCartItemsComponent implements OnInit {
   private _cartService = inject(CartService);
+  private _wishlistService = inject(WishlistService);
+  private _wishlistCountService = inject(WishlistCountService);
   private _cartCountService = inject(CartCountService);
   private _cartGlobalService = inject(CartGlobalService);
+  private _cartRefresh = inject(CartRefreshService);
 
   cartItems = signal<CartItem[]>([]);
 
@@ -28,10 +34,20 @@ export class ListCartItemsComponent implements OnInit {
 
   ngOnInit(): void {
     this._fetchCartItems();
+
+    this._cartRefresh.refresh$
+      .subscribe(() => {
+        this._fetchCartItems();
+        this._wishlistCountService.setCount(0);
+      });
   }
 
   onCartChanged() {
     this._fetchCartItems();
+  }
+
+  onWishlistChanged() {
+    this._fetchWishlistCount();
   }
 
   cartCount() {
@@ -46,8 +62,10 @@ export class ListCartItemsComponent implements OnInit {
     });
   }
 
-  // cartItems(): Product[] {
-  //   return this._cartService.getCartProducts();
-  // }
+  private _fetchWishlistCount() {
+    this._wishlistService.getWishlistProducts().subscribe(products => {
+      this._wishlistCountService.setCount(products.length);
+    });
+  }
 
 }
