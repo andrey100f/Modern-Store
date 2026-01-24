@@ -29,6 +29,31 @@ public class UserService {
             .toList();
     }
 
+    public void addProductToWishlist(String userId, String productId) {
+        var user = getById(userId);
+        var productDto = productService.getProductById(productId);
+        var product = productMapper.mapToModel(productDto);
+        var isNotInWishlist = user.getWishlist().stream()
+            .noneMatch(p -> p.getId().equals(productId));
+
+        if(isNotInWishlist) {
+            user.getWishlist().add(product);
+            repository.save(user);
+        }
+    }
+
+    public void removeProductFromWishlist(String userId, String productId) {
+        var user = getById(userId);
+        user.getWishlist().removeIf(p -> p.getId().equals(productId));
+        repository.save(user);
+    }
+
+    public void clearUserWishlist(String userId) {
+        var user = getById(userId);
+        user.setWishlist(List.of());
+        repository.save(user);
+    }
+
     public List<CartItemDto> getUserCart(String userId) {
         var user = getById(userId);
         return user.getCart().stream()

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import {cartResolver} from './resolvers/products-grid.resolver';
 
 export const routes: Routes = [
   {
@@ -9,10 +8,7 @@ export const routes: Routes = [
   },
   {
     path: 'products',
-    loadComponent: () => import('./pages/products-grid/products-grid.component'),
-    resolve: {
-      _: cartResolver
-    },
+    loadComponent: () => import('./pages/products-grid/products-grid.component')
   },
   {
     path: 'product/:productId',

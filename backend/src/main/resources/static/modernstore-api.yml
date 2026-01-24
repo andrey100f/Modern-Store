@@ -119,6 +119,89 @@ paths:
           $ref: '#/components/responses/NotFound'
         '5XX':
           $ref: '#/components/responses/Unexpected'
+  /users/{userId}/wishlist/{productId}:
+    post:
+      tags:
+        - wishlist
+      operationId: addItemToUserWishlist
+      summary: Add item to user's wishlist
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+        - name: productId
+          in: path
+          description: ID of the product to add
+          required: true
+          schema:
+            type: string
+      responses:
+          '201':
+            $ref: '#/components/responses/Created'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '5XX':
+            $ref: '#/components/responses/Unexpected'
+    delete:
+      tags:
+        - wishlist
+      operationId: removeItemFromUserWishlist
+      summary: Remove item from user's wishlist
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+        - name: productId
+          in: path
+          description: ID of the product to remove
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+  /users/{userId}/wishlist/clear:
+    delete:
+      tags:
+        - wishlist
+      operationId: clearUserWishlist
+      summary: Clear user's wishlist
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
   /users/{userId}/cart:
     get:
       tags:

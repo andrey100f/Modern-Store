@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {HeaderComponent} from './layout/header/header.component';
+import {CartService} from './services/cart.service';
+import {CartCountService} from './services/cart/cart-count.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +10,14 @@ import {HeaderComponent} from './layout/header/header.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  protected readonly title = signal('ng-ecommerce');
+export class AppComponent implements OnInit {
+  private readonly _cartService = inject(CartService);
+  private readonly _cartCountService = inject(CartCountService);
+
+  ngOnInit() {
+    this._cartService.getCartProducts().subscribe(cartItems => {
+      this._cartCountService.setCount(cartItems.length);
+    });
+  }
+
 }
