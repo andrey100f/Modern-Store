@@ -53,6 +53,26 @@ public class UserService {
         repository.save(user);
     }
 
+    public void removeProductFromCart(String userId, String productId) {
+        var user = getById(userId);
+
+        var existingCartItem = user.getCart().stream()
+            .filter(item -> item.getProduct().getId().equals(productId))
+            .findFirst();
+
+        if (existingCartItem.isPresent()) {
+            var item = existingCartItem.get();
+
+            if (item.getQuantity() > 1) {
+                item.setQuantity(item.getQuantity() - 1);
+            } else {
+                user.setCart(List.of());
+            }
+        }
+
+        repository.save(user);
+    }
+
     private User getById(String id) {
         return repository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), id));

@@ -29,6 +29,12 @@ public class UserController implements UsersApi {
     }
 
     @Override
+    public ResponseEntity<Void> removeItemFromUserCart(String userId, String productId) {
+        service.removeProductFromCart(userId, productId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
     public ResponseEntity<List<ProductDto>> getUserWishlist(String userId) {
         return ResponseEntity.ok(service.getUserWishlist(userId));
     }
