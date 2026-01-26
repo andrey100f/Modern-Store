@@ -1,6 +1,8 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {ViewPanelDirective} from '../../directives/view-panel.directive';
 import {EcommerceStore} from '../../ecommerce-store';
+import {CartService} from '../../services/cart.service';
+import {CartGlobalService} from '../../services/cart/cart-global.service';
 
 @Component({
   selector: 'app-summarize-order',
@@ -12,10 +14,10 @@ import {EcommerceStore} from '../../ecommerce-store';
 })
 export class SummarizeOrderComponent {
 
-  store = inject(EcommerceStore);
+  private _cartGlobalService = inject(CartGlobalService);
 
   subtotal = computed(() =>
-    Math.round(this.store.cartItems().reduce((acc, item) => acc + (item.product.price * item.quantity), 0)));
+    Math.round(this._cartGlobalService.getCartItems().reduce((acc, item) => acc + (item.product.price * item.quantity), 0)));
 
   tax = computed(() => Math.round(0.05 * this.subtotal()));
 

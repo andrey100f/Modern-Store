@@ -1,4 +1,4 @@
-import {Component, inject, input, signal} from '@angular/core';
+import {Component, inject, input, OnInit, signal} from '@angular/core';
 import {Product} from '../../../models/product.model';
 import {TitleCasePipe} from '@angular/common';
 import {StockStatusComponent} from '../stock-status/stock-status.component';
@@ -10,6 +10,9 @@ import {produce} from 'immer';
 import {
   ToggleWishlistButtonComponent
 } from '../../../components/toggle-wishlist-button/toggle-wishlist-button.component';
+import {CartService} from '../../../services/cart.service';
+import {WishlistService} from '../../../services/wishlist.service';
+import {WishlistCountService} from '../../../services/wishlist-count.service';
 
 @Component({
   selector: 'app-product-info',
@@ -25,12 +28,31 @@ import {
   templateUrl: './product-info.component.html',
   styleUrl: './product-info.component.scss',
 })
-export class ProductInfoComponent {
+export class ProductInfoComponent implements OnInit {
+  private _cartService = inject(CartService);
+  private _wishlistService = inject(WishlistService);
+  private _wishlistCountService = inject(WishlistCountService);
+
   product = input.required<Product>();
   quantity = signal<number>(1);
-  store = inject(EcommerceStore);
+  wishlistProducts = signal<Product[]>([]);
+
+  ngOnInit(): void {
+    this._loadWishlist();
+  }
 
   onAddToCart() {
-    this.store.addToCart(this.product(), this.quantity());
+    this._cartService.addNewProductToCart(this.product().id);
+  }
+
+  onWishlistChange() {
+    this._loadWishlist();
+  }
+
+  private _loadWishlist() {
+    this._wishlistService.getWishlistProducts().subscribe(products => {
+      this.wishlistProducts.set(products);
+      this._wishlistCountService.setCount(products.length);
+    });
   }
 }

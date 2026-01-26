@@ -8,7 +8,7 @@ export const routes: Routes = [
   },
   {
     path: 'products',
-    loadComponent: () => import('./pages/products-grid/products-grid.component'),
+    loadComponent: () => import('./pages/products-grid/products-grid.component')
   },
   {
     path: 'product/:productId',
