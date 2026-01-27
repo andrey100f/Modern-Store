@@ -17,8 +17,14 @@
 	<properties>
         <app.version>1.0.0</app.version>
 
+        <!-- OpenAPI -->
+        <springdoc-openapi-web.version>2.8.14</springdoc-openapi-web.version>
+        <jackson-databind.version>0.2.7</jackson-databind.version>
+        <springdoc.openapi-ui.version>1.8.0</springdoc.openapi-ui.version>
+        <openapi-generator.version>7.16.0</openapi-generator.version>
+
         <liquibase.version>5.0.1</liquibase.version>
-        <oauth-jose.version>7.0.2</oauth-jose.version>
+        <jjwt.version>0.13.0</jjwt.version>
 
 		<java.version>25</java.version>
         <maven.compiler.source>25</maven.compiler.source>
@@ -29,7 +35,7 @@
     <dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mongodb</artifactId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -41,16 +47,47 @@
 		</dependency>
 
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-jose</artifactId>
-            <version>${oauth-jose.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.liquibase.ext</groupId>
             <artifactId>liquibase-mongodb</artifactId>
             <version>${liquibase.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- OpenAPI Dependencies -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-web.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.openapi-ui.version}</version>
+        </dependency>
+
+        <!-- JWT-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -61,7 +98,7 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mongodb-test</artifactId>
+			<artifactId>spring-boot-starter-data-mongodb-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -103,6 +140,30 @@
                     </excludes>
                 </configuration>
 			</plugin>
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/static/auth-api.yml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.ubb.modernstore.openapi.controller</apiPackage>
+                            <modelPackage>com.ubb.modernstore.openapi.model</modelPackage>
+                            <configOptions>
+                                <configHelp>true</configHelp>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useJakartaEe>true</useJakartaEe>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 

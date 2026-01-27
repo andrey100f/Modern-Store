@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  title: ModernStore Auth API
+  version: 1.0.0
+  description: API for ecommerce store authentication and user management
+servers:
+  - url: http://localhost:8081/api
+paths:
+  /auth/register:
+    post:
+      tags:
+        - auth
+      operationId: registerUser
+      summary: Register a new user
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterRequestDto'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+  /auth/login:
+    post:
+      tags:
+        - auth
+      operationId: loginUser
+      summary: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDto'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+components:
+  schemas:
+    RegisterRequestDto:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    LoginRequestDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+  responses:
+    Unauthorized:
+      description: Access token is missing or invalid
+    BadRequest:
+      description: The request could not be understood or was missing required parameters
+    NotFound:
+      description: Resource not found
+    Unexpected:
+      description: An unexpected error occurred
+    Created:
+      description: Resource successfully created
+    Ok:
+      description: Successful operation
