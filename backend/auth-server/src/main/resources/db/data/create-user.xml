@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+         http://www.liquibase.org/xml/ns/mongodb
+         http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="create-users-collection" author="andrey100f">
+        <mongodb:createCollection collectionName="users">
+            <mongodb:options>
+                {
+                    validator: {
+                        $jsonSchema: {
+                            bsonType: "object",
+                            properties: {
+                                username: {
+                                    bsonType: "string",
+                                },
+                                email: {
+                                    bsonType: "string",
+                                },
+                                password: {
+                                    bsonType: "string",
+                                },
+                                wishlist: {
+                                    bsonType: "array",
+                                    items: {
+                                        bsonType: "object",
+                                        properties: {
+                                            name: {
+                                                bsonType: "string",
+                                            },
+                                            description: {
+                                                bsonType: "string",
+                                            },
+                                            price: {
+                                                bsonType: "double",
+                                            },
+                                            imageUrl: {
+                                                bsonType: "string",
+                                            },
+                                            inStock: {
+                                                bsonType: "bool",
+                                            },
+                                            category: {
+                                                bsonType: "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                cart: {
+                                    bsonType: "array",
+                                    items: {
+                                        bsonType: "object",
+                                        properties: {
+                                            quantity: {
+                                                bsonType: "int",
+                                            },
+                                            product: {
+                                                bsonType: "object",
+                                                properties: {
+                                                    name: {
+                                                        bsonType: "string",
+                                                    },
+                                                    description: {
+                                                        bsonType: "string",
+                                                    },
+                                                    price: {
+                                                        bsonType: "double",
+                                                    },
+                                                    imageUrl: {
+                                                        bsonType: "string",
+                                                    },
+                                                    inStock: {
+                                                        bsonType: "bool",
+                                                    },
+                                                    category: {
+                                                        bsonType: "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    validationAction: "warn",
+                    validationLevel: "strict"
+                }
+            </mongodb:options>
+        </mongodb:createCollection>
+    </changeSet>
+</databaseChangeLog>
