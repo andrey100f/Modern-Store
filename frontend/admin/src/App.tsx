@@ -1,48 +1,39 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
-import { Navbar, Sidebar } from "./components";
-import {Ecommerce, Orders } from "./pages";
+import { Ecommerce, Orders } from "./pages";
+import Login from "./pages/login/Login";
+import { AppLayout } from "./AppLayout";
+import { ProtectedRoute, PublicOnlyRoute } from "./guards/RouteGuards";
 
-import { useStateContext } from './contexts/ContextProvider';``
-
-import './App.css'
+import "./App.css";
 
 function App() {
-  const { activeMenu } = useStateContext();
-
   return (
     <div>
       <BrowserRouter>
-        <div className="flex relative">
-          { activeMenu ? (
-            <div className="w-72 fixed sidebar bg-white">
-              <Sidebar />
-            </div>
-          ) : (
-            <div className="w-0">
-              <Sidebar />
-            </div>
-          )}
-          <div className={
-            `bg-main-bg min-h-screen w-full ${activeMenu ? "md:ml-72" : "flex-2"}`
-          }>
-            <div className="fixed md:static bg-main-bg navbar w-full">
-              <Navbar />
-            </div>
+        <Routes>
+          <Route element={<PublicOnlyRoute />}>
+            <Route path="/login" element={<Login />} />
+          </Route>
 
-            <div>
-              <Routes>
-                <Route path="/" element={ <Ecommerce /> } />
-                <Route path="/ecommerce" element={ <Ecommerce /> } />
+          {/* Protected: doar dacă e logat */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<Navigate to="/ecommerce" replace />} />
+              <Route path="/ecommerce" element={<Ecommerce />} />
+              <Route path="/orders" element={<Orders />} />
+            </Route>
+          </Route>
 
-                <Route path="/orders" element={ <Orders /> } />
-              </Routes>
-            </div>
-          </div>
-        </div>
+          {/* fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </BrowserRouter>
+
+      <ToastContainer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
