@@ -5,6 +5,7 @@ import com.ubb.modernstore.mapper.ProductMapper;
 import com.ubb.modernstore.model.Product;
 import com.ubb.modernstore.openapi.model.ProductCategoryEnum;
 import com.ubb.modernstore.openapi.model.ProductDto;
+import com.ubb.modernstore.openapi.model.ProductRequestDto;
 import com.ubb.modernstore.repository.ProductRepository;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,26 @@ public class ProductService {
         return repository.findByIdIn(productIds).stream()
             .map(mapper::mapToDto)
             .toList();
+    }
+
+    public void createProduct(ProductRequestDto productDto) {
+        var product = mapper.mapFromRequestDtoToModel(productDto);
+        repository.save(product);
+    }
+
+    public ProductDto updateProduct(String id, ProductRequestDto productRequestDto) {
+        var existingProduct = getById(id);
+        var updatedProduct = mapper.mapFromRequestDtoToModel(productRequestDto);
+
+        updatedProduct.setId(existingProduct.getId());
+        var savedProduct = repository.save(updatedProduct);
+
+        return mapper.mapToDto(savedProduct);
+    }
+
+    public void deleteProduct(String id) {
+        var product = getById(id);
+        repository.delete(product);
     }
 
     private Product getById(String id) {

@@ -32,6 +32,26 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/Unexpected'
+    post:
+      tags:
+        - products
+      operationId: createProduct
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequestDto'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
   /products/{id}:
     get:
       tags:
@@ -52,6 +72,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+    put:
+        tags:
+          - products
+        operationId: updateProduct
+        summary: Update an existing product
+        parameters:
+          - name: id
+            in: path
+            description: ID of the product to update
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductRequestDto'
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ProductDto'
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '401':
+            $ref: '#/components/responses/Unauthorized'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '5XX':
+            $ref: '#/components/responses/Unexpected'
+    delete:
+      tags:
+        - products
+      operationId: deleteProduct
+      summary: Delete a product
+      parameters:
+        - name: id
+          in: path
+          description: ID of the product to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -437,11 +513,9 @@ paths:
           $ref: '#/components/responses/Unexpected'
 components:
   schemas:
-    ProductDto:
+    ProductRequestDto:
       type: object
       properties:
-        id:
-          type: string
         name:
           type: string
         description:
@@ -451,15 +525,17 @@ components:
           format: float
         imageUrl:
           type: string
-        rating:
-          type: number
-          format: float
-        reviewCount:
-          type: integer
         inStock:
           type: boolean
         category:
           $ref: '#/components/schemas/ProductCategoryEnum'
+    ProductDto:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ProductRequestDto'
+      properties:
+        id:
+          type: string
     ProductCategoryEnum:
       type: string
       enum:
