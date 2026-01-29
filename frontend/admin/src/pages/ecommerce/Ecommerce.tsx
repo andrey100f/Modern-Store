@@ -1,4 +1,4 @@
-import {customersData, customersGrid, earningData} from "../../data/dummy.tsx";
+import {earningData} from "../../data/dummy.tsx";
 import {Header} from "../../components";
 import {
   ColumnDirective,
@@ -8,8 +8,23 @@ import {
   Inject, Page,
   Sort, Toolbar
 } from "@syncfusion/ej2-react-grids";
+import {productsGrid} from "./products-table-data.ts";
+import {useEffect, useState} from "react";
+import {getProducts} from "../../api/products-api.ts";
+import type {Product} from "../../api/types/product.ts";
 
 function Ecommerce() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    async function getAllProducts() {
+      const res = await getProducts();
+      setProducts(res);
+    }
+
+    getAllProducts();
+  }, []);
+
   return (
     <div className="mt-12">
       <div className="flex flex-wrap lg:flex-nowrap justify-center">
@@ -29,13 +44,13 @@ function Ecommerce() {
       </div>
 
       <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
-        <Header title="Customers (will be replaced with Products table)" />
+        <Header title="Products" />
         <GridComponent id="gridcomp"
-                       dataSource={customersData}
+                       dataSource={products}
                        editSettings={{ allowDeleting: true, allowAdding: true, allowEditing: true }} allowPaging allowSorting width="auto"
                        toolbar={['Delete', 'Add']}>
           <ColumnsDirective>
-            {customersGrid.map((item, index) => (
+            {productsGrid.map((item, index) => (
               <ColumnDirective key={index} {...item} />
             ))}
           </ColumnsDirective>
