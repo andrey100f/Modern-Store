@@ -413,6 +413,28 @@ paths:
           $ref: '#/components/responses/NotFound'
         '5XX':
           $ref: '#/components/responses/Unexpected'
+  /orders:
+    post:
+      tags:
+        - orders
+      operationId: placeOrder
+      summary: Place an order
+      description: Add a new order for the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequestDto'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
 components:
   schemas:
     ProductDto:
@@ -452,6 +474,23 @@ components:
           $ref: '#/components/schemas/ProductDto'
         quantity:
           type: integer
+    OrderRequestDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        total:
+          type: number
   responses:
     Unauthorized:
       description: Access token is missing or invalid
