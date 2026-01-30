@@ -14,14 +14,11 @@
 </div>
 
 <div class="flex gap-4 mb border-b border-gray-200 pb-4">
-  <button matButton="filled" class="w-2/3 flex items-center gap-2" (click)="onAddToCart()" [disabled]="!product().inStock">
+  <button matButton="filled" class="w-2/3 flex items-center gap-2" (click)="onAddToCart()" [disabled]="!product().inStock || !authService.isAuthenticated()">
     <mat-icon>shopping_cart</mat-icon>
     {{ product().inStock ? 'Add to Cart' : 'Out of Stock' }}
   </button>
   <app-toggle-wishlist-button [product]="product()" [wishlistProducts]="wishlistProducts()" (wishlistChanged)="onWishlistChange()" />
-  <button matIconButton>
-    <mat-icon>share</mat-icon>
-  </button>
 </div>
 
 <div class="pt-6 flex flex-col gap-2 text-gray-700 text-xs">

@@ -1,15 +1,13 @@
-import {inject} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {inject} from '@angular/core';
 
-export class BaseService {
-
+export abstract class BaseService {
+  public httpClient = inject(HttpClient);
   private _snackBar = inject(MatSnackBar);
 
-  protected httpClient = inject(HttpClient);
-
-  protected handleError(error: HttpErrorResponse): Observable<never> {
+  public handleError(error: HttpErrorResponse): Observable<never> {
     this._openSnackBar(error.message, true);
     if (error.status === 0) {
       console.error('An HTTP error occurred:', error.error);

@@ -12,32 +12,32 @@ export class CartService extends BaseService {
 
   public getCartProducts(userId: string = 'e6e134d7-3976-4484-aabe-71b42e8d543d'): Observable<CartItem[]> {
     return this.httpClient.get<CartItem[]>(`${this._baseUrl}/${userId}/cart`)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
   public addProductToCart(productId: string, userId: string = 'e6e134d7-3976-4484-aabe-71b42e8d543d'): Observable<void> {
     return this.httpClient.post<void>(`${this._baseUrl}/${userId}/cart/${productId}`, null)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
   public removeProductFromCart(productId: string, userId: string = 'e6e134d7-3976-4484-aabe-71b42e8d543d'): Observable<void> {
     return this.httpClient.delete<void>(`${this._baseUrl}/${userId}/cart/${productId}`)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
   public addNewProductToCart(productId: string, userId: string = 'e6e134d7-3976-4484-aabe-71b42e8d543d'): Observable<void> {
     return this.httpClient.post<void>(`${this._baseUrl}/${userId}/cart/${productId}/add`, null)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
   public clearProductFromCart(productId: string, userId: string = 'e6e134d7-3976-4484-aabe-71b42e8d543d'): Observable<void> {
     return this.httpClient.delete<void>(`${this._baseUrl}/${userId}/cart/${productId}/clear`)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
   public moveProductFromCartToWishlist(productId: string, userId: string = 'e6e134d7-3976-4484-aabe-71b42e8d543d'): Observable<void> {
     return this.httpClient.put<void>(`${this._baseUrl}/${userId}/cart/${productId}/move-to-wishlist`, null)
-      .pipe(catchError(this.handleError));
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
   //

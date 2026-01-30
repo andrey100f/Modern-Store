@@ -41,12 +41,17 @@ export default class ProductsGridComponent implements OnInit {
   protected category = input<string | undefined>(undefined);
   protected categories = signal<(string | undefined)[]>([undefined, 'electronics', 'clothing', 'accessories', 'home']);
 
+  private _token = localStorage.getItem('token');
+
   ngOnInit() {
     this._route.queryParams.subscribe((params) => {
       const category = params['category'];
       this._store.setCategory(category);
       this._loadProducts(category);
-      this.loadWishlistProducts();
+
+      if (this._token) {
+        this.loadWishlistProducts();
+      }
     });
   }
 

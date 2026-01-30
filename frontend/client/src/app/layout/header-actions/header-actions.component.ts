@@ -11,6 +11,7 @@ import {SignInDialogComponent} from '../../components/sign-in-dialog/sign-in-dia
 import {SignUpDialogComponent} from '../../components/sign-up-dialog/sign-up-dialog.component';
 import {WishlistCountService} from '../../services/wishlist-count.service';
 import {CartCountService} from '../../services/cart/cart-count.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-header-actions',
@@ -32,6 +33,8 @@ export class HeaderActionsComponent {
 
   private _wishlistCountService = inject(WishlistCountService);
   private _cartCountService = inject(CartCountService);
+
+  authService = inject(AuthService);
   store = inject(EcommerceStore);
   matDialog = inject(MatDialog);
 

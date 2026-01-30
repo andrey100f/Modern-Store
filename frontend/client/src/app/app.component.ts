@@ -13,11 +13,14 @@ import {CartCountService} from './services/cart/cart-count.service';
 export class AppComponent implements OnInit {
   private readonly _cartService = inject(CartService);
   private readonly _cartCountService = inject(CartCountService);
+  private readonly _token = localStorage.getItem('token');
 
   ngOnInit() {
-    this._cartService.getCartProducts().subscribe(cartItems => {
-      this._cartCountService.setCount(cartItems.length);
-    });
+    if (this._token) {
+      this._cartService.getCartProducts().subscribe(cartItems => {
+        this._cartCountService.setCount(cartItems.length);
+      });
+    }
   }
 
 }

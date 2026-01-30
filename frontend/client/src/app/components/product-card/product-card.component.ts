@@ -7,6 +7,7 @@ import {RouterLink} from '@angular/router';
 import {CartService} from '../../services/cart.service';
 import {ToasterService} from '../../services/toaster.service';
 import {CartCountService} from '../../services/cart/cart-count.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-product-card',
@@ -24,6 +25,7 @@ export class ProductCardComponent {
   private _toaster = inject(ToasterService);
 
   product = input.required<Product>();
+  authService = inject(AuthService);
 
   store = inject(EcommerceStore);
 

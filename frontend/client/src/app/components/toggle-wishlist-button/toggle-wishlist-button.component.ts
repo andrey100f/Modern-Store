@@ -4,6 +4,7 @@ import {MatIconButton} from '@angular/material/button';
 import {Product} from '../../models/product.model';
 import {WishlistService} from '../../services/wishlist.service';
 import {ToasterService} from '../../services/toaster.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-toggle-wishlist-button',
@@ -18,6 +19,7 @@ export class ToggleWishlistButtonComponent {
 
   private _wishlistService = inject(WishlistService);
 
+  authService = inject(AuthService);
   product = input.required<Product>();
   wishlistProducts = input<Product[]>([]);
   wishlistChanged = output<boolean>();

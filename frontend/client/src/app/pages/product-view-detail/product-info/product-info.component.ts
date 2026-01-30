@@ -5,14 +5,13 @@ import {StockStatusComponent} from '../stock-status/stock-status.component';
 import {QtySelectorComponent} from '../../../components/qty-selector/qty-selector.component';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {EcommerceStore} from '../../../ecommerce-store';
-import {produce} from 'immer';
 import {
   ToggleWishlistButtonComponent
 } from '../../../components/toggle-wishlist-button/toggle-wishlist-button.component';
 import {CartService} from '../../../services/cart.service';
 import {WishlistService} from '../../../services/wishlist.service';
 import {WishlistCountService} from '../../../services/wishlist-count.service';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-product-info',
@@ -33,12 +32,15 @@ export class ProductInfoComponent implements OnInit {
   private _wishlistService = inject(WishlistService);
   private _wishlistCountService = inject(WishlistCountService);
 
+  authService = inject(AuthService);
   product = input.required<Product>();
   quantity = signal<number>(1);
   wishlistProducts = signal<Product[]>([]);
 
   ngOnInit(): void {
-    this._loadWishlist();
+    if (this.authService.isAuthenticated()) {
+      this._loadWishlist();
+    }
   }
 
   onAddToCart() {
