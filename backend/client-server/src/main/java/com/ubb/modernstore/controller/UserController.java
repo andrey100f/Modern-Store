@@ -1,83 +1,93 @@
 package com.ubb.modernstore.controller;
 
-import com.ubb.modernstore.aspect.ApiController;
-import com.ubb.modernstore.openapi.controller.UsersApi;
 import com.ubb.modernstore.openapi.model.CartItemDto;
 import com.ubb.modernstore.openapi.model.ProductDto;
 import com.ubb.modernstore.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@ApiController
+@RestController
 @RequiredArgsConstructor
-public class UserController implements UsersApi {
+@RequestMapping("/api/users")
+public class UserController {
 
     private final UserService service;
 
-    @Override
-    public ResponseEntity<List<CartItemDto>> getUserCart(String userId) {
-        return ResponseEntity.ok(service.getUserCart(userId));
+    @GetMapping("/cart")
+    public ResponseEntity<List<CartItemDto>> getUserCart(@AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok(service.getUserCart(jwt.getSubject()));
     }
 
-    @Override
-    public ResponseEntity<Void> addItemToUserCart(String userId, String productId) {
-        service.addProductToCart(userId, productId);
+    @PostMapping("/cart/{productId}")
+    public ResponseEntity<Void> addItemToUserCart(@AuthenticationPrincipal Jwt jwt,
+                                                  @PathVariable String productId) {
+        service.addProductToCart(jwt.getSubject(), productId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Override
-    public ResponseEntity<Void> removeItemFromUserCart(String userId, String productId) {
-        service.removeProductFromCart(userId, productId);
+    @DeleteMapping("/cart/{productId}")
+    public ResponseEntity<Void> removeItemFromUserCart(@AuthenticationPrincipal Jwt jwt,
+                                                       @PathVariable String productId) {
+        service.removeProductFromCart(jwt.getSubject(), productId);
         return ResponseEntity.noContent().build();
     }
 
-    @Override
-    public ResponseEntity<Void> addNewProductToCart(String userId, String productId) {
-        service.addNewProductToCart(userId, productId);
+    @PostMapping("/cart/{productId}/add")
+    public ResponseEntity<Void> addNewProductToCart(@AuthenticationPrincipal Jwt jwt,
+                                                    @PathVariable String productId) {
+        service.addNewProductToCart(jwt.getSubject(), productId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Override
-    public ResponseEntity<Void> clearUserCartItem(String userId, String productId) {
-        service.clearProductFromCart(userId, productId);
+    @DeleteMapping("/cart/{productId}/clear")
+    public ResponseEntity<Void> clearUserCartItem(@AuthenticationPrincipal Jwt jwt,
+                                                  @PathVariable String productId) {
+        service.clearProductFromCart(jwt.getSubject(), productId);
         return ResponseEntity.noContent().build();
     }
 
-    @Override
-    public ResponseEntity<List<ProductDto>> getUserWishlist(String userId) {
-        return ResponseEntity.ok(service.getUserWishlist(userId));
+    @GetMapping("/wishlist")
+    public ResponseEntity<List<ProductDto>> getUserWishlist(@AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok(service.getUserWishlist(jwt.getSubject()));
     }
 
-    @Override
-    public ResponseEntity<Void> addItemToUserWishlist(String userId, String productId) {
-        service.addProductToWishlist(userId, productId);
+    @PostMapping("/wishlist/{productId}")
+    public ResponseEntity<Void> addItemToUserWishlist(@AuthenticationPrincipal Jwt jwt,
+                                                      @PathVariable String productId) {
+        service.addProductToWishlist(jwt.getSubject(), productId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Override
-    public ResponseEntity<Void> clearUserWishlist(String userId) {
-        service.clearUserWishlist(userId);
+    @DeleteMapping("/wishlist/clear")
+    public ResponseEntity<Void> clearUserWishlist(@AuthenticationPrincipal Jwt jwt) {
+        service.clearUserWishlist(jwt.getSubject());
         return ResponseEntity.noContent().build();
     }
 
-    @Override
-    public ResponseEntity<Void> removeItemFromUserWishlist(String userId, String productId) {
-        service.removeProductFromWishlist(userId, productId);
+    @DeleteMapping("/wishlist/{productId}")
+    public ResponseEntity<Void> removeItemFromUserWishlist(@AuthenticationPrincipal Jwt jwt,
+                                                           @PathVariable String productId) {
+        service.removeProductFromWishlist(jwt.getSubject(), productId);
         return ResponseEntity.noContent().build();
     }
 
-    @Override
-    public ResponseEntity<Void> moveItemFromCartToWishlist(String userId, String productId) {
-        service.moveProductFromCartToWishlist(userId, productId);
+    @PutMapping("/cart/{productId}/move-to-wishlist")
+    public ResponseEntity<Void> moveItemFromCartToWishlist(@AuthenticationPrincipal Jwt jwt,
+                                                           @PathVariable String productId) {
+        service.moveProductFromCartToWishlist(jwt.getSubject(), productId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @Override
-    public ResponseEntity<Void> moveItemsFromWishlistToCart(String userId, List<ProductDto> productDto) {
-        service.moveProductsFromWishlistToCart(userId, productDto);
+    @PutMapping("/wishlist/move-to-cart")
+    public ResponseEntity<Void> moveItemsFromWishlistToCart(@AuthenticationPrincipal Jwt jwt,
+                                                            @RequestBody List<ProductDto> productDto) {
+        service.moveProductsFromWishlistToCart(jwt.getSubject(), productDto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

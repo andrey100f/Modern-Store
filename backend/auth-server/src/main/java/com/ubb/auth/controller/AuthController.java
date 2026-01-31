@@ -3,6 +3,7 @@ package com.ubb.auth.controller;
 import com.ubb.auth.service.AuthService;
 import com.ubb.modernstore.openapi.controller.AuthApi;
 import com.ubb.modernstore.openapi.model.LoginRequestDto;
+import com.ubb.modernstore.openapi.model.LoginResponseDto;
 import com.ubb.modernstore.openapi.model.RegisterRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class AuthController implements AuthApi {
     private final AuthService service;
 
     @Override
-    public ResponseEntity<String> loginUser(LoginRequestDto loginRequestDto) {
+    public ResponseEntity<LoginResponseDto> loginUser(LoginRequestDto loginRequestDto) {
         return ResponseEntity.ok(service.login(loginRequestDto));
     }
 

@@ -5,6 +5,7 @@ import com.ubb.auth.exception.EntityNotFoundException;
 import com.ubb.auth.model.User;
 
 import com.ubb.auth.repository.UserRepository;
+import com.ubb.modernstore.openapi.model.LoginResponseDto;
 import com.ubb.modernstore.openapi.model.RegisterRequestDto;
 import com.ubb.modernstore.openapi.model.LoginRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class AuthService {
         repository.save(user);
     }
 
-    public String login(LoginRequestDto loginRequestDto) {
+    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         var user = repository.findByEmail(loginRequestDto.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
@@ -40,7 +41,10 @@ public class AuthService {
             throw new AuthException("Invalid credentials");
         }
 
-        return jwtService.generateToken(user);
+        var response = new LoginResponseDto();
+        response.setToken(jwtService.generateToken(user));
+
+        return response;
     }
 
 }

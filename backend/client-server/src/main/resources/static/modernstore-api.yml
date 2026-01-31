@@ -165,330 +165,330 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/Unexpected'
-  /users/{userId}/wishlist:
-    get:
-      tags:
-        - users
-      operationId: getUserWishlist
-      summary: Get user's wishlist
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProductDto'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-  /users/{userId}/wishlist/{productId}:
-    post:
-      tags:
-        - wishlist
-      operationId: addItemToUserWishlist
-      summary: Add item to user's wishlist
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-        - name: productId
-          in: path
-          description: ID of the product to add
-          required: true
-          schema:
-            type: string
-      responses:
-          '201':
-            $ref: '#/components/responses/Created'
-          '400':
-            $ref: '#/components/responses/BadRequest'
-          '401':
-            $ref: '#/components/responses/Unauthorized'
-          '404':
-            $ref: '#/components/responses/NotFound'
-          '5XX':
-            $ref: '#/components/responses/Unexpected'
-    delete:
-      tags:
-        - wishlist
-      operationId: removeItemFromUserWishlist
-      summary: Remove item from user's wishlist
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-        - name: productId
-          in: path
-          description: ID of the product to remove
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/Ok'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-  /users/{userId}/wishlist/clear:
-    delete:
-      tags:
-        - wishlist
-      operationId: clearUserWishlist
-      summary: Clear user's wishlist
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/Ok'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-  /users/{userId}/cart:
-    get:
-      tags:
-        - users
-      operationId: getUserCart
-      summary: Get user's shopping cart
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CartItemDto'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-  /users/{userId}/cart/{productId}:
-    post:
-      tags:
-        - users
-      operationId: addItemToUserCart
-      summary: Add item to user's shopping cart
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-              type: string
-        - name: productId
-          in: path
-          description: ID of the product to add
-          required: true
-          schema:
-              type: string
-      responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-    delete:
-      tags:
-        - users
-      operationId: removeItemFromUserCart
-      summary: Remove item from user's shopping cart
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-        - name: productId
-          in: path
-          description: ID of the product to remove
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/Ok'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-  /users/{userId}/cart/{productId}/add:
-    post:
-      tags:
-        - cart
-      operationId: addNewProductToCart
-      summary: Add mew product to user's shopping cart
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-        - name: productId
-          in: path
-          description: ID of the product to increment
-          required: true
-          schema:
-            type: string
-      responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-  /users/{userId}/cart/{productId}/clear:
-    delete:
-      tags:
-        - cart
-      operationId: clearUserCartItem
-      summary: Clear all quantities of a specific item from user's shopping cart
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-        - name: productId
-          in: path
-          description: ID of the product to clear
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/Ok'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-  /users/{userId}/cart/{productId}/move-to-wishlist:
-    put:
-      tags:
-        - users
-      operationId: moveItemFromCartToWishlist
-      summary: Move item from user's cart to wishlist
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-        - name: productId
-          in: path
-          description: ID of the product to move
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/Ok'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
-  /users/{userId}/wishlist/move-to-cart:
-    put:
-      tags:
-        - users
-      operationId: moveItemsFromWishlistToCart
-      summary: Move item from user's wishlist to cart
-      parameters:
-        - name: userId
-          in: path
-          description: ID of the user
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/ProductDto'
-      responses:
-        '200':
-          $ref: '#/components/responses/Ok'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '5XX':
-          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/wishlist:
+#    get:
+#      tags:
+#        - users
+#      operationId: getUserWishlist
+#      summary: Get user's wishlist
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          description: Successful operation
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  $ref: '#/components/schemas/ProductDto'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/wishlist/{productId}:
+#    post:
+#      tags:
+#        - wishlist
+#      operationId: addItemToUserWishlist
+#      summary: Add item to user's wishlist
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#        - name: productId
+#          in: path
+#          description: ID of the product to add
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#          '201':
+#            $ref: '#/components/responses/Created'
+#          '400':
+#            $ref: '#/components/responses/BadRequest'
+#          '401':
+#            $ref: '#/components/responses/Unauthorized'
+#          '404':
+#            $ref: '#/components/responses/NotFound'
+#          '5XX':
+#            $ref: '#/components/responses/Unexpected'
+#    delete:
+#      tags:
+#        - wishlist
+#      operationId: removeItemFromUserWishlist
+#      summary: Remove item from user's wishlist
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#        - name: productId
+#          in: path
+#          description: ID of the product to remove
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          $ref: '#/components/responses/Ok'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/wishlist/clear:
+#    delete:
+#      tags:
+#        - wishlist
+#      operationId: clearUserWishlist
+#      summary: Clear user's wishlist
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          $ref: '#/components/responses/Ok'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/cart:
+#    get:
+#      tags:
+#        - users
+#      operationId: getUserCart
+#      summary: Get user's shopping cart
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          description: Successful operation
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  $ref: '#/components/schemas/CartItemDto'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/cart/{productId}:
+#    post:
+#      tags:
+#        - users
+#      operationId: addItemToUserCart
+#      summary: Add item to user's shopping cart
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#              type: string
+#        - name: productId
+#          in: path
+#          description: ID of the product to add
+#          required: true
+#          schema:
+#              type: string
+#      responses:
+#        '201':
+#          $ref: '#/components/responses/Created'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#    delete:
+#      tags:
+#        - users
+#      operationId: removeItemFromUserCart
+#      summary: Remove item from user's shopping cart
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#        - name: productId
+#          in: path
+#          description: ID of the product to remove
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          $ref: '#/components/responses/Ok'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/cart/{productId}/add:
+#    post:
+#      tags:
+#        - cart
+#      operationId: addNewProductToCart
+#      summary: Add mew product to user's shopping cart
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#        - name: productId
+#          in: path
+#          description: ID of the product to increment
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '201':
+#          $ref: '#/components/responses/Created'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/cart/{productId}/clear:
+#    delete:
+#      tags:
+#        - cart
+#      operationId: clearUserCartItem
+#      summary: Clear all quantities of a specific item from user's shopping cart
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#        - name: productId
+#          in: path
+#          description: ID of the product to clear
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          $ref: '#/components/responses/Ok'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/cart/{productId}/move-to-wishlist:
+#    put:
+#      tags:
+#        - users
+#      operationId: moveItemFromCartToWishlist
+#      summary: Move item from user's cart to wishlist
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#        - name: productId
+#          in: path
+#          description: ID of the product to move
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        '200':
+#          $ref: '#/components/responses/Ok'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
+#  /users/{userId}/wishlist/move-to-cart:
+#    put:
+#      tags:
+#        - users
+#      operationId: moveItemsFromWishlistToCart
+#      summary: Move item from user's wishlist to cart
+#      parameters:
+#        - name: userId
+#          in: path
+#          description: ID of the user
+#          required: true
+#          schema:
+#            type: string
+#      requestBody:
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              type: array
+#              items:
+#                $ref: '#/components/schemas/ProductDto'
+#      responses:
+#        '200':
+#          $ref: '#/components/responses/Ok'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/Unexpected'
   /orders:
     post:
       tags:

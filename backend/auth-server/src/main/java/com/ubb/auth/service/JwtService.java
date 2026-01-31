@@ -24,7 +24,7 @@ public class JwtService {
         var now = Instant.now();
 
         return Jwts.builder()
-                .subject(user.getUsername())
+                .subject(user.getId())
                 .claim("roles", user.getRoles())
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plusSeconds(expiration)))

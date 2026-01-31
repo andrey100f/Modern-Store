@@ -45,7 +45,7 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/LoginResponseDto'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '5XX':
@@ -67,6 +67,11 @@ components:
         email:
           type: string
         password:
+          type: string
+    LoginResponseDto:
+      type: object
+      properties:
+        token:
           type: string
   responses:
     Unauthorized:
