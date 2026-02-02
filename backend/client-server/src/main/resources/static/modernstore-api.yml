@@ -567,6 +567,21 @@ components:
           type: string
         total:
           type: number
+    AuditLogDto:
+      type: object
+      properties:
+        id:
+          type: string
+        entityType:
+          type: string
+        timestamp:
+          type: string
+        userId:
+          type: string
+        eventType:
+          type: string
+        entityId:
+          type: string
   responses:
     Unauthorized:
       description: Access token is missing or invalid

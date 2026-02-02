@@ -1,0 +1,16 @@
+name: modern-store
+services:
+  rabbitmq:
+    image: rabbitmq:4.2.3-management
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: rabbit
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia/
+    ports:
+      - "7072:15672"
+      - "5672:5672"
+
+volumes:
+  rabbitmq_data:
