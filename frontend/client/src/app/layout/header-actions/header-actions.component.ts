@@ -1,11 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {Router, RouterLink} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {MatBadge} from '@angular/material/badge';
-import {EcommerceStore} from '../../ecommerce-store';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {MatDivider} from '@angular/material/divider';
 import {MatDialog} from '@angular/material/dialog';
 import {SignInDialogComponent} from '../../components/sign-in-dialog/sign-in-dialog.component';
 import {SignUpDialogComponent} from '../../components/sign-up-dialog/sign-up-dialog.component';
@@ -22,10 +19,6 @@ import {AsyncPipe} from '@angular/common';
     MatIcon,
     RouterLink,
     MatBadge,
-    MatMenuTrigger,
-    MatMenu,
-    MatDivider,
-    MatMenuItem,
     AsyncPipe
   ],
   templateUrl: './header-actions.component.html',
@@ -35,10 +28,9 @@ export class HeaderActionsComponent {
 
   private _wishlistCountService = inject(WishlistCountService);
   private _cartCountService = inject(CartCountService);
-  private _router = inject(Router);
+  private _authService = inject(AuthService);
 
   authService = inject(AuthService);
-  store = inject(EcommerceStore);
   matDialog = inject(MatDialog);
 
   wishlistCount() {
@@ -49,12 +41,12 @@ export class HeaderActionsComponent {
     return this._cartCountService.getCount();
   }
 
-  getUser() {
-    return this.store.user();
+  isAuthenticated() {
+    return this._authService.isAuthenticated();
   }
 
   signOut() {
-    this.store.signOut();
+    this._authService.logout();
   }
 
   openSignInDialog() {

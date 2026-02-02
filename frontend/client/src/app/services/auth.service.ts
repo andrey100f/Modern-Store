@@ -21,6 +21,11 @@ export class AuthService extends BaseService {
       .pipe(catchError((err) => this.handleError(err)));
   }
 
+  public logout(): void {
+    localStorage.removeItem('user');
+    this.emitAuthState();
+  }
+
   public getToken(): LoginResponse | null {
     const user = localStorage.getItem('user');
     if (!user) {

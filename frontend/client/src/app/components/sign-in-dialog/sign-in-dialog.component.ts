@@ -35,8 +35,8 @@ export class SignInDialogComponent {
   matDialog = inject(MatDialog);
 
   signInForm = this.fb.group({
-    email: ['johnd@test.com', Validators.required],
-    password: ['test123', Validators.required]
+    email: ['', Validators.required],
+    password: ['', Validators.required]
   });
 
   passwordVisible = signal<boolean>(false);

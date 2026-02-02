@@ -1,0 +1,9 @@
+:host {
+  .logout-button {
+    color: red;
+  }
+
+  .logout-button:hover {
+    background-color: oklch(93.6% 0.032 17.717);
+  }
+}
