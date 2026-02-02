@@ -1,11 +1,9 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {ViewPanelDirective} from '../../../directives/view-panel.directive';
-import {EcommerceStore} from '../../../ecommerce-store';
 import {ShowCartItemComponent} from '../../show-cart-item/show-cart-item.component';
 import {CartItem} from '../../../models/cart-item.model';
 import {CartService} from '../../../services/cart.service';
 import {CartCountService} from '../../../services/cart/cart-count.service';
-import {Product} from '../../../models/product.model';
 import {CartGlobalService} from '../../../services/cart/cart-global.service';
 import {WishlistService} from '../../../services/wishlist.service';
 import {WishlistCountService} from '../../../services/wishlist-count.service';
@@ -29,8 +27,6 @@ export class ListCartItemsComponent implements OnInit {
   private _cartRefresh = inject(CartRefreshService);
 
   cartItems = signal<CartItem[]>([]);
-
-  store = inject(EcommerceStore);
 
   ngOnInit(): void {
     this._fetchCartItems();

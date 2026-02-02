@@ -1,7 +1,6 @@
 import {Component, computed, inject, input, output} from '@angular/core';
 import {CartItem} from '../../models/cart-item.model';
 import {QtySelectorComponent} from '../../components/qty-selector/qty-selector.component';
-import {EcommerceStore} from '../../ecommerce-store';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {Product} from '../../models/product.model';
@@ -19,7 +18,6 @@ import {CartService} from '../../services/cart.service';
 })
 export class ShowCartItemComponent {
   private _cartService = inject(CartService);
-  store = inject(EcommerceStore);
   item = input.required<CartItem>();
   cartChanged = output<boolean>();
   wishlistChanged = output<boolean>();

@@ -36,29 +36,29 @@ export const EcommerceStore = signalStore(
     cartCount: computed(() => cartItems().reduce((acc, item) => acc + item.quantity, 0)),
   })),
   withMethods((store, toaster = inject(ToasterService), matDialog = inject(MatDialog), router = inject(Router)) => ({
-    setCategory: signalMethod<string | undefined>((category: string | undefined) => {
-      patchState(store, { category })
-    }),
-    addToWishlist: (product: Product) => {
-      const updatedWishlistItems = produce(store.wishlistItems(), (draft) => {
-        if (!draft.find((p) => p.id === product.id)) {
-          draft.push(product);
-        }
-      });
-
-      patchState(store, { wishlistItems: updatedWishlistItems });
-      toaster.success('Product added to wishlist');
-    },
-
-    removeFromWishlist: (product: Product) => {
-      patchState(store, { wishlistItems: store.wishlistItems().filter(p => p.id !== product.id) });
-      toaster.success('Product removed from wishlist');
-    },
-
-    clearWishlist: () => {
-      patchState(store, { wishlistItems: [] });
-      toaster.success('Wishlist cleared');
-    },
+    // setCategory: signalMethod<string | undefined>((category: string | undefined) => {
+    //   patchState(store, { category })
+    // }),
+    // addToWishlist: (product: Product) => {
+    //   const updatedWishlistItems = produce(store.wishlistItems(), (draft) => {
+    //     if (!draft.find((p) => p.id === product.id)) {
+    //       draft.push(product);
+    //     }
+    //   });
+    //
+    //   patchState(store, { wishlistItems: updatedWishlistItems });
+    //   toaster.success('Product added to wishlist');
+    // },
+    //
+    // removeFromWishlist: (product: Product) => {
+    //   patchState(store, { wishlistItems: store.wishlistItems().filter(p => p.id !== product.id) });
+    //   toaster.success('Product removed from wishlist');
+    // },
+    //
+    // clearWishlist: () => {
+    //   patchState(store, { wishlistItems: [] });
+    //   toaster.success('Wishlist cleared');
+    // },
 
     // addToCart: (product: Product, quantity = 1) => {
     //   const existingItemIndex = store.cartItems().findIndex(i => i.product.id === product.id);
@@ -75,14 +75,14 @@ export const EcommerceStore = signalStore(
     //   toaster.success(existingItemIndex !== -1 ? 'Product added again' : 'Product added to cart');
     // },
 
-    setItemQuantity(params: { productId: string, quantity: number }) {
-      const index = store.cartItems().findIndex(c => c.product.id === params.productId);
-      const updated = produce(store.cartItems(), (draft) => {
-        draft[index].quantity = params.quantity;
-      });
-
-      patchState(store, { cartItems: updated });
-    },
+    // setItemQuantity(params: { productId: string, quantity: number }) {
+    //   const index = store.cartItems().findIndex(c => c.product.id === params.productId);
+    //   const updated = produce(store.cartItems(), (draft) => {
+    //     draft[index].quantity = params.quantity;
+    //   });
+    //
+    //   patchState(store, { cartItems: updated });
+    // },
 
     // addAllWishlistToCart: () => {
     //   const updatedCartItems = produce(store.cartItems(), (draft) => {
@@ -126,22 +126,22 @@ export const EcommerceStore = signalStore(
       router.navigate(['/checkout']);
     },
 
-    signIn: (params: SignInParams, checkout: boolean, dialogId: string) => {
-      patchState(store, {
-        user: {
-          id: '20b39217-6599-4494-b224-558d0ed1ff34',
-          email: params.email,
-          name: 'John Doe',
-          imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg'
-        }
-      });
-
-      matDialog.getDialogById(dialogId)?.close();
-
-      if (checkout) {
-        router.navigate(['/checkout']);
-      }
-    },
+    // signIn: (params: SignInParams, checkout: boolean, dialogId: string) => {
+    //   patchState(store, {
+    //     user: {
+    //       id: '20b39217-6599-4494-b224-558d0ed1ff34',
+    //       email: params.email,
+    //       name: 'John Doe',
+    //       imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg'
+    //     }
+    //   });
+    //
+    //   matDialog.getDialogById(dialogId)?.close();
+    //
+    //   if (checkout) {
+    //     router.navigate(['/checkout']);
+    //   }
+    // },
 
     signOut: () => {
       patchState(store, { user: undefined });

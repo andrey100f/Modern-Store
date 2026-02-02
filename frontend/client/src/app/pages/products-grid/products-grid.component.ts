@@ -7,9 +7,9 @@ import {TitleCasePipe} from '@angular/common';
 import {ToggleWishlistButtonComponent} from '../../components/toggle-wishlist-button/toggle-wishlist-button.component';
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
-import {EcommerceStore} from '../../ecommerce-store';
 import {WishlistService} from '../../services/wishlist.service';
 import {WishlistCountService} from '../../services/wishlist-count.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-products-grid',
@@ -29,34 +29,30 @@ import {WishlistCountService} from '../../services/wishlist-count.service';
   styleUrl: './products-grid.component.scss',
 })
 export default class ProductsGridComponent implements OnInit {
-
+  private _authService = inject(AuthService);
   private _productService = inject(ProductService);
   private _wishlistService = inject(WishlistService);
   private _wishlistCountService = inject(WishlistCountService);
   private _route = inject(ActivatedRoute);
-  private _store = inject(EcommerceStore);
 
   products = signal<Product[]>([]);
   wishlistProducts = signal<Product[]>([]);
   protected category = input<string | undefined>(undefined);
   protected categories = signal<(string | undefined)[]>([undefined, 'electronics', 'clothing', 'accessories', 'home']);
 
-  private _token = localStorage.getItem('token');
-
   ngOnInit() {
     this._route.queryParams.subscribe((params) => {
       const category = params['category'];
-      this._store.setCategory(category);
       this._loadProducts(category);
 
-      if (this._token) {
+      if (this._authService.isAuthenticated()) {
         this.loadWishlistProducts();
       }
     });
   }
 
   protected getCurrentCategory() {
-    return this._store.category();
+    return this._route.snapshot.queryParams['category'];
   }
 
   private _loadProducts(category: string | undefined) {

@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {MatBadge} from '@angular/material/badge';
 import {EcommerceStore} from '../../ecommerce-store';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
@@ -12,6 +12,7 @@ import {SignUpDialogComponent} from '../../components/sign-up-dialog/sign-up-dia
 import {WishlistCountService} from '../../services/wishlist-count.service';
 import {CartCountService} from '../../services/cart/cart-count.service';
 import {AuthService} from '../../services/auth.service';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-header-actions',
@@ -24,7 +25,8 @@ import {AuthService} from '../../services/auth.service';
     MatMenuTrigger,
     MatMenu,
     MatDivider,
-    MatMenuItem
+    MatMenuItem,
+    AsyncPipe
   ],
   templateUrl: './header-actions.component.html',
   styleUrl: './header-actions.component.scss',
@@ -33,6 +35,7 @@ export class HeaderActionsComponent {
 
   private _wishlistCountService = inject(WishlistCountService);
   private _cartCountService = inject(CartCountService);
+  private _router = inject(Router);
 
   authService = inject(AuthService);
   store = inject(EcommerceStore);
@@ -55,8 +58,10 @@ export class HeaderActionsComponent {
   }
 
   openSignInDialog() {
-    this.matDialog.open(SignInDialogComponent, {
-      disableClose: true
+    const ref = this.matDialog.open(SignInDialogComponent);
+
+    ref.afterClosed().subscribe(() => {
+      this.authService.emitAuthState();
     });
   }
 

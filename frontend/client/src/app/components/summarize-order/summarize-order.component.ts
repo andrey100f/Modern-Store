@@ -1,7 +1,5 @@
-import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {ViewPanelDirective} from '../../directives/view-panel.directive';
-import {EcommerceStore} from '../../ecommerce-store';
-import {CartService} from '../../services/cart.service';
 import {CartGlobalService} from '../../services/cart/cart-global.service';
 
 @Component({

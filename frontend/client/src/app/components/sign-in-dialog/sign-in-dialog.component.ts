@@ -5,9 +5,9 @@ import {MatIcon} from '@angular/material/icon';
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatPrefix, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {SignInParams} from '../../models/user.model';
-import {EcommerceStore} from '../../ecommerce-store';
 import {SignUpDialogComponent} from '../sign-up-dialog/sign-up-dialog.component';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-in-dialog',
@@ -26,8 +26,10 @@ import {SignUpDialogComponent} from '../sign-up-dialog/sign-up-dialog.component'
   styleUrl: './sign-in-dialog.component.scss',
 })
 export class SignInDialogComponent {
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
+
   fb = inject(NonNullableFormBuilder);
-  store = inject(EcommerceStore);
   data = inject<{ checkout: boolean }>(MAT_DIALOG_DATA);
   dialogRef = inject(MatDialogRef);
   matDialog = inject(MatDialog);
@@ -50,7 +52,16 @@ export class SignInDialogComponent {
     }
 
     const { email, password } = this.signInForm.value;
-    this.store.signIn({ email, password } as SignInParams, this.data?.checkout, this.dialogRef.id);
+    this._authService.login(email!, password!).subscribe({
+      next: (data) => {
+        localStorage.setItem('user', JSON.stringify(data));
+        this.dialogRef.close();
+      }
+    });
+
+    if (this.data?.checkout) {
+      this._router.navigate(['/checkout']);
+    }
   }
 
   openSignUpDialog() {

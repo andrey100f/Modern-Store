@@ -1,9 +1,9 @@
 import {Component, inject, input, OnInit, signal} from '@angular/core';
 import {Product} from '../../../models/product.model';
-import {TitleCasePipe} from '@angular/common';
+import {AsyncPipe, TitleCasePipe} from '@angular/common';
 import {StockStatusComponent} from '../stock-status/stock-status.component';
 import {QtySelectorComponent} from '../../../components/qty-selector/qty-selector.component';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {
   ToggleWishlistButtonComponent
@@ -12,6 +12,8 @@ import {CartService} from '../../../services/cart.service';
 import {WishlistService} from '../../../services/wishlist.service';
 import {WishlistCountService} from '../../../services/wishlist-count.service';
 import {AuthService} from '../../../services/auth.service';
+import {CartCountService} from '../../../services/cart/cart-count.service';
+import {ToasterService} from '../../../services/toaster.service';
 
 @Component({
   selector: 'app-product-info',
@@ -22,13 +24,15 @@ import {AuthService} from '../../../services/auth.service';
     MatButton,
     MatIcon,
     ToggleWishlistButtonComponent,
-    MatIconButton
+    AsyncPipe
   ],
   templateUrl: './product-info.component.html',
   styleUrl: './product-info.component.scss',
 })
 export class ProductInfoComponent implements OnInit {
   private _cartService = inject(CartService);
+  private _cartCountService = inject(CartCountService);
+  private _toaster = inject(ToasterService);
   private _wishlistService = inject(WishlistService);
   private _wishlistCountService = inject(WishlistCountService);
 
@@ -44,7 +48,10 @@ export class ProductInfoComponent implements OnInit {
   }
 
   onAddToCart() {
-    this._cartService.addNewProductToCart(this.product().id);
+    this._cartService.addNewProductToCart(this.product().id).subscribe(() => {
+      this._cartCountService.setCount(this._cartCountService.getCount() + this.quantity());
+      this._toaster.success('Product added to cart');
+    });
   }
 
   onWishlistChange() {

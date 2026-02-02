@@ -2,19 +2,20 @@ import {Component, inject, input} from '@angular/core';
 import {Product} from '../../models/product.model';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {EcommerceStore} from '../../ecommerce-store';
 import {RouterLink} from '@angular/router';
 import {CartService} from '../../services/cart.service';
 import {ToasterService} from '../../services/toaster.service';
 import {CartCountService} from '../../services/cart/cart-count.service';
 import {AuthService} from '../../services/auth.service';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-product-card',
   imports: [
     MatButton,
     MatIcon,
-    RouterLink
+    RouterLink,
+    AsyncPipe
   ],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
@@ -26,8 +27,6 @@ export class ProductCardComponent {
 
   product = input.required<Product>();
   authService = inject(AuthService);
-
-  store = inject(EcommerceStore);
 
   onAddToCart(event: MouseEvent) {
     event.stopPropagation();

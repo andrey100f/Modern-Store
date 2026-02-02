@@ -5,12 +5,14 @@ import {Product} from '../../models/product.model';
 import {WishlistService} from '../../services/wishlist.service';
 import {ToasterService} from '../../services/toaster.service';
 import {AuthService} from '../../services/auth.service';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-toggle-wishlist-button',
   imports: [
     MatIcon,
-    MatIconButton
+    MatIconButton,
+    AsyncPipe
   ],
   templateUrl: './toggle-wishlist-button.component.html',
   styleUrl: './toggle-wishlist-button.component.scss',

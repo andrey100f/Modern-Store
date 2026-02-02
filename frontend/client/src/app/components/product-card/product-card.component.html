@@ -9,7 +9,7 @@
     <div class="text-sm font-medium mb-4">{{ product().inStock ? 'In Stock' : 'Out of Stock' }}</div>
     <div class="flex items-center justify-between mt-auto">
       <span class="text-2xl font-bold text-gray-900">${{ product().price }}</span>
-      <button matButton="filled" class="flex items-center gap-2" (click)="onAddToCart($event)" [disabled]="!authService.isAuthenticated()">
+      <button matButton="filled" class="flex items-center gap-2" (click)="onAddToCart($event)" [disabled]="!(authService.isAuthenticated$ | async)">
         <mat-icon>shopping_cart</mat-icon>
         Add to Cart
       </button>
