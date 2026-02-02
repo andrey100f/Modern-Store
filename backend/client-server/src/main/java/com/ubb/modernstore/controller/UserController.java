@@ -40,8 +40,9 @@ public class UserController {
 
     @PostMapping("/cart/{productId}/add")
     public ResponseEntity<Void> addNewProductToCart(@AuthenticationPrincipal Jwt jwt,
-                                                    @PathVariable String productId) {
-        service.addNewProductToCart(jwt.getSubject(), productId);
+                                                    @PathVariable String productId,
+                                                    @RequestParam Integer quantity) {
+        service.addNewProductToCart(jwt.getSubject(), productId, quantity);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

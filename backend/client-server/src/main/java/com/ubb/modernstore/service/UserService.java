@@ -108,13 +108,25 @@ public class UserService {
         publishAuditLog("CART_REMOVE", userId, productId);
     }
 
-    public void addNewProductToCart(String userId, String productId) {
+    public void addNewProductToCart(String userId, String productId, Integer quantity) {
         var user = getById(userId);
+
+        var existingCartItem = user.getCart().stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst();
+
+        if (existingCartItem.isPresent()) {
+            var item = existingCartItem.get();
+            item.setQuantity(item.getQuantity() + quantity);
+            repository.save(user);
+            return;
+        }
+
         var productDto = productService.getProductById(productId);
         var cartItem = new CartItem();
 
         cartItem.setProduct(productMapper.mapToModel(productDto));
-        cartItem.setQuantity(1);
+        cartItem.setQuantity(quantity);
         user.getCart().add(cartItem);
 
         repository.save(user);

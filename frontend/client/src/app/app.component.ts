@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     if (this._authService.isAuthenticated()) {
       this._cartService.getCartProducts().subscribe(cartItems => {
-        this._cartCountService.setCount(cartItems.length);
+        const quantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+        this._cartCountService.setCount(quantity);
       });
     }
   }

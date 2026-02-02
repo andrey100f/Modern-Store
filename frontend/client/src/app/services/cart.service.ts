@@ -3,6 +3,7 @@ import {BaseService} from './base-service';
 import {environment} from '../../environments/environment.local';
 import {catchError, Observable} from 'rxjs';
 import {CartItem} from '../models/cart-item.model';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,9 @@ export class CartService extends BaseService {
       .pipe(catchError((err) => this.handleError(err)));
   }
 
-  public addNewProductToCart(productId: string): Observable<void> {
-    return this.httpClient.post<void>(`${this._baseUrl}/cart/${productId}/add`, null)
+  public addNewProductToCart(productId: string, quantity: number): Observable<void> {
+    const params = new HttpParams().set('quantity', quantity);
+    return this.httpClient.post<void>(`${this._baseUrl}/cart/${productId}/add`, null, { params })
       .pipe(catchError((err) => this.handleError(err)));
   }
 

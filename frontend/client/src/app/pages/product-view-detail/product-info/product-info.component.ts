@@ -48,7 +48,7 @@ export class ProductInfoComponent implements OnInit {
   }
 
   onAddToCart() {
-    this._cartService.addNewProductToCart(this.product().id).subscribe(() => {
+    this._cartService.addNewProductToCart(this.product().id, this.quantity()).subscribe(() => {
       this._cartCountService.setCount(this._cartCountService.getCount() + this.quantity());
       this._toaster.success('Product added to cart');
     });

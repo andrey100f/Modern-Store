@@ -52,7 +52,8 @@ export class ListCartItemsComponent implements OnInit {
 
   private _fetchCartItems() {
     this._cartService.getCartProducts().subscribe(products => {
-      this._cartCountService.setCount(products.length);
+      const quantity = products.reduce((acc, item) => acc + item.quantity, 0);
+      this._cartCountService.setCount(quantity);
       this._cartGlobalService.setCartItems(products);
       this.cartItems.set(products);
     });
