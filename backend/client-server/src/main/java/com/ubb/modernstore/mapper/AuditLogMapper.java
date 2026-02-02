@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface AuditLogMapper {
 
+    AuditLogDto mapToDto(AuditLog auditLog);
     AuditLog mapToModel(AuditLogDto auditLogDto);
 
 }

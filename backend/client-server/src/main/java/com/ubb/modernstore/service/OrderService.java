@@ -1,10 +1,13 @@
 package com.ubb.modernstore.service;
 
 import com.ubb.modernstore.mapper.OrderMapper;
+import com.ubb.modernstore.openapi.model.OrderDto;
 import com.ubb.modernstore.openapi.model.OrderRequestDto;
 import com.ubb.modernstore.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +21,12 @@ public class OrderService {
         order.setUserId(userId);
 
         repository.save(order);
+    }
+
+    public List<OrderDto> getAllOrders() {
+        return repository.findAll().stream()
+            .map(mapper::mapToDto)
+            .toList();
     }
 
 }

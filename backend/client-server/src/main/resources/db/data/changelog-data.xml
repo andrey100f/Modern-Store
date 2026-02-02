@@ -9,4 +9,7 @@
          http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
     
     <include file="db/data/create-product.xml" />
+    <include file="db/data/create-audit-log.xml" />
+    <include file="db/data/create-order.xml" />
+    <include file="db/data/create-user.xml" />
 </databaseChangeLog>

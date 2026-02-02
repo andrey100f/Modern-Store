@@ -36,9 +36,11 @@ public class SecurityConfig {
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/users/**").authenticated()
-                .requestMatchers("/api/orders/**").hasRole("USER")
+                .requestMatchers(HttpMethod.GET, "/api/orders/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/orders/**").hasRole("USER")
                 .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                 .requestMatchers("/api/products/**").hasRole("ADMIN")
+                .requestMatchers("/api/audit-logs/**").hasRole("ADMIN")
                 .anyRequest().permitAll())
             .oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(jwt -> jwt

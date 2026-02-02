@@ -1,6 +1,7 @@
 package com.ubb.modernstore.mapper;
 
 import com.ubb.modernstore.model.Order;
+import com.ubb.modernstore.openapi.model.OrderDto;
 import com.ubb.modernstore.openapi.model.OrderRequestDto;
 import org.mapstruct.Mapper;
 
@@ -8,5 +9,6 @@ import org.mapstruct.Mapper;
 public interface OrderMapper {
 
     Order mapFromRequestDtoToModel(OrderRequestDto requestDto);
+    OrderDto mapToDto(Order order);
 
 }

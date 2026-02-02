@@ -511,6 +511,47 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '5XX':
           $ref: '#/components/responses/Unexpected'
+    get:
+      tags:
+        - orders
+      operationId: getAllOrders
+      summary: Get all orders
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
+  /audit-logs:
+    get:
+      tags:
+        - audit
+      operationId: getAuditLogs
+      summary: Get audit logs
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditLogDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/Unexpected'
 components:
   schemas:
     ProductRequestDto:
@@ -567,6 +608,13 @@ components:
           type: string
         total:
           type: number
+    OrderDto:
+      allOf:
+        - $ref: '#/components/schemas/OrderRequestDto'
+      type: object
+      properties:
+        id:
+          type: string
     AuditLogDto:
       type: object
       properties:

@@ -28,9 +28,6 @@
                                 imageUrl: {
                                     bsonType: "string",
                                 },
-                                rating: {
-                                    bsonType: "double",
-                                },
                                 inStock: {
                                     bsonType: "bool",
                                 },

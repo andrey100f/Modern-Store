@@ -1,6 +1,7 @@
 import {earningData} from "../../data/dummy.tsx";
 import {Header} from "../../components";
 import {
+  type ActionEventArgs,
   ColumnDirective,
   ColumnsDirective,
   Edit, Filter,
@@ -26,7 +27,7 @@ function Ecommerce() {
     getAllProducts();
   }, []);
 
-  const handleActionBegin = async (args) => {
+  const handleActionBegin = async (args: ActionEventArgs) => {
     if (args.requestType === 'save') {
       if (args.action === 'add') {
         args.cancel = true;
@@ -45,7 +46,7 @@ function Ecommerce() {
         args.cancel = true;
 
         try {
-          const { id, ...payload } = args.data;
+          const { id, ...payload } = args.data as Product;
           const res = await updateProduct(id, payload);
           setProducts((prevProducts) => prevProducts.map((prod) => prod.id === res.id ? res : prod));
         } catch (error) {
@@ -62,9 +63,9 @@ function Ecommerce() {
     }
   }
 
-  const handleActionComplete = (args: any) => {
+  const handleActionComplete = (args: ActionEventArgs) => {
     if (args.requestType === "save") {
-      gridRef.current?.closeEdit(); // 🔑 cheia
+      gridRef.current?.closeEdit();
     }
   };
 
