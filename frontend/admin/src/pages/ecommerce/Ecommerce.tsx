@@ -9,12 +9,13 @@ import {
   Sort, Toolbar
 } from "@syncfusion/ej2-react-grids";
 import {productsGrid} from "./products-table-data.ts";
-import {useEffect, useState} from "react";
-import {getProducts} from "../../api/products-api.ts";
+import {useEffect, useRef, useState} from "react";
+import {addProduct, deleteProduct, getProducts, updateProduct} from "../../api/products-api.ts";
 import type {Product} from "../../api/types/product.ts";
 
 function Ecommerce() {
   const [products, setProducts] = useState<Product[]>([]);
+  const gridRef = useRef<GridComponent | null>(null);
 
   useEffect(() => {
     async function getAllProducts() {
@@ -24,6 +25,48 @@ function Ecommerce() {
 
     getAllProducts();
   }, []);
+
+  const handleActionBegin = async (args) => {
+    if (args.requestType === 'save') {
+      if (args.action === 'add') {
+        args.cancel = true;
+
+        try {
+          const payload = args.data as Partial<Product>;
+          await addProduct(payload);
+          const newProducts = await getProducts();
+          setProducts(newProducts);
+        } catch (error) {
+          console.error('Error adding product:', error);
+        }
+      }
+
+      if (args.action === 'edit') {
+        args.cancel = true;
+
+        try {
+          const { id, ...payload } = args.data;
+          const res = await updateProduct(id, payload);
+          setProducts((prevProducts) => prevProducts.map((prod) => prod.id === res.id ? res : prod));
+        } catch (error) {
+          console.error('Error updating product:', error);
+        }
+      }
+    }
+
+    if (args.requestType === 'delete') {
+      args.cancel = true;
+      const rows = Array.isArray(args.data) ? args.data : [args.data];
+      await Promise.all((rows).map((r) => deleteProduct(r.id)));
+      setProducts((prevProducts) => prevProducts.filter((prod) => !rows.some((r) => r.id === prod.id)));
+    }
+  }
+
+  const handleActionComplete = (args: any) => {
+    if (args.requestType === "save") {
+      gridRef.current?.closeEdit(); // 🔑 cheia
+    }
+  };
 
   return (
     <div className="mt-12">
@@ -48,7 +91,9 @@ function Ecommerce() {
         <GridComponent id="gridcomp"
                        dataSource={products}
                        editSettings={{ allowDeleting: true, allowAdding: true, allowEditing: true }} allowPaging allowSorting width="auto"
-                       toolbar={['Delete', 'Add']}>
+                       toolbar={['Delete', 'Add', 'Edit', 'Update', 'Cancel']}
+                       actionBegin={handleActionBegin}
+                       actionComplete={handleActionComplete}>
           <ColumnsDirective>
             {productsGrid.map((item, index) => (
               <ColumnDirective key={index} {...item} />

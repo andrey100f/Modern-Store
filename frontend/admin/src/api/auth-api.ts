@@ -6,7 +6,7 @@ const baseUrl = "http://localhost:8081/api/auth";
 export async function login(email: string, password: string) {
   try {
     const response = await axios.post(`${baseUrl}/login`, {email, password});
-    localStorage.setItem("token", response.data);
+    localStorage.setItem("token", response.data.token);
     console.log("Login successful, token stored.");
   } catch (error) {
     if (axios.isAxiosError(error)) {
