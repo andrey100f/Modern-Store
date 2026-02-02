@@ -1,6 +1,6 @@
-<button [class]="isInWishlist() ? '!text-red-500': '!text-gray-400'"
+<button [class]="isInWishlist() && (authService.isAuthenticated$ | async) ? '!text-red-500': '!text-gray-400'"
         matIconButton
         (click)="toggleWishlist(product())"
         [disabled]="!(authService.isAuthenticated$ | async)">
-  <mat-icon>{{ isInWishlist() ? 'favorite' : 'favorite_border '}}</mat-icon>
+  <mat-icon>{{ isInWishlist() && (authService.isAuthenticated$ | async) ? 'favorite' : 'favorite_border '}}</mat-icon>
 </button>

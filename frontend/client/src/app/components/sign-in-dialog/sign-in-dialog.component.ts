@@ -8,6 +8,8 @@ import {MatInput} from '@angular/material/input';
 import {SignUpDialogComponent} from '../sign-up-dialog/sign-up-dialog.component';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
+import {WishlistCountService} from '../../services/wishlist-count.service';
+import {CartCountService} from '../../services/cart/cart-count.service';
 
 @Component({
   selector: 'app-sign-in-dialog',
@@ -27,6 +29,8 @@ import {Router} from '@angular/router';
 })
 export class SignInDialogComponent {
   private _authService = inject(AuthService);
+  private _wishlistCountService = inject(WishlistCountService);
+  private _cartCountService = inject(CartCountService);
   private _router = inject(Router);
 
   fb = inject(NonNullableFormBuilder);
@@ -55,6 +59,8 @@ export class SignInDialogComponent {
     this._authService.login(email!, password!).subscribe({
       next: (data) => {
         localStorage.setItem('user', JSON.stringify(data));
+        this._wishlistCountService.refreshCount();
+        this._cartCountService.refreshCount();
         this.dialogRef.close();
       }
     });

@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {MatBadge} from '@angular/material/badge';
 import {MatDialog} from '@angular/material/dialog';
 import {SignInDialogComponent} from '../../components/sign-in-dialog/sign-in-dialog.component';
@@ -25,10 +25,9 @@ import {AsyncPipe} from '@angular/common';
   styleUrl: './header-actions.component.scss',
 })
 export class HeaderActionsComponent {
-
+  private _router = inject(Router);
   private _wishlistCountService = inject(WishlistCountService);
   private _cartCountService = inject(CartCountService);
-  private _authService = inject(AuthService);
 
   authService = inject(AuthService);
   matDialog = inject(MatDialog);
@@ -41,12 +40,12 @@ export class HeaderActionsComponent {
     return this._cartCountService.getCount();
   }
 
-  isAuthenticated() {
-    return this._authService.isAuthenticated();
-  }
-
   signOut() {
-    this._authService.logout();
+    this.authService.logout();
+
+    if (this._router.url.includes("/checkout")) {
+      this._router.navigate(['/']);
+    }
   }
 
   openSignInDialog() {

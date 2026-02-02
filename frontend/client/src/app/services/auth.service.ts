@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BaseService} from './base-service';
 import {environment} from '../../environments/environment.local';
 import {BehaviorSubject, catchError, Observable} from 'rxjs';
+import {CartCountService} from './cart/cart-count.service';
+import {WishlistCountService} from './wishlist-count.service';
 
 interface LoginResponse {
   token: string;
@@ -12,6 +14,8 @@ interface LoginResponse {
 })
 export class AuthService extends BaseService {
   private _baseUrl = `${environment.authApiUrl}`;
+  private _cartCountService = inject(CartCountService);
+  private _wishlistCountService = inject(WishlistCountService);
 
   private authSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   readonly isAuthenticated$ = this.authSubject.asObservable();
@@ -23,6 +27,8 @@ export class AuthService extends BaseService {
 
   public logout(): void {
     localStorage.removeItem('user');
+    this._cartCountService.setCount(0);
+    this._wishlistCountService.setCount(0);
     this.emitAuthState();
   }
 
