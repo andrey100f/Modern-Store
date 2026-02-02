@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+         http://www.liquibase.org/xml/ns/mongodb
+         http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="create-audit-logs-collection" author="andrey100f">
+        <mongodb:createCollection collectionName="auditLogs">
+            <mongodb:options>
+                {
+                    validator: {
+                        $jsonSchema: {
+                            bsonType: "object",
+                            properties: {
+                                eventType: {
+                                    bsonType: "string",
+                                },
+                                entityId: {
+                                    bsonType: "string",
+                                },
+                                userId: {
+                                    bsonType: "double",
+                                },
+                                timestamp: {
+                                    bsonType: "string",
+                                }
+                            }
+                        }
+                    },
+                    validationAction: "warn",
+                    validationLevel: "strict"
+                }
+            </mongodb:options>
+        </mongodb:createCollection>
+    </changeSet>
+</databaseChangeLog>

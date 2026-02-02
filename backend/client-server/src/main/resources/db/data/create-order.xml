@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+         http://www.liquibase.org/xml/ns/mongodb
+         http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+    <changeSet id="create-orders-collection" author="andrey100f">
+        <mongodb:createCollection collectionName="orders">
+            <mongodb:options>
+                {
+                    validator: {
+                        $jsonSchema: {
+                            bsonType: "object",
+                            properties: {
+                                firstName: {
+                                    bsonType: "string",
+                                },
+                                lastName: {
+                                    bsonType: "string",
+                                },
+                                address: {
+                                    bsonType: "double",
+                                },
+                                city: {
+                                    bsonType: "string",
+                                },
+                                state: {
+                                    bsonType: "string",
+                                },
+                                zip: {
+                                    bsonType: "string",
+                                },
+                                userId: {
+                                    bsonType: "string",
+                                },
+                                total: {
+                                    bsonType: "double",
+                                }
+                            }
+                        }
+                    },
+                    validationAction: "warn",
+                    validationLevel: "strict"
+                }
+            </mongodb:options>
+        </mongodb:createCollection>
+    </changeSet>
+</databaseChangeLog>
