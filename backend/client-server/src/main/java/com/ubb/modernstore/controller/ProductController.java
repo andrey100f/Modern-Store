@@ -8,6 +8,9 @@ import com.ubb.modernstore.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,21 +35,23 @@ public class ProductController implements ProductsApi {
         return ResponseEntity.ok(service.getProductsByIds(ids));
     }
 
-    @Override
-    public ResponseEntity<Void> createProduct(ProductRequestDto productDto) {
-        service.createProduct(productDto);
+    @PostMapping
+    public ResponseEntity<Void> createProduct(@AuthenticationPrincipal Jwt jwt, @RequestBody ProductRequestDto productDto) {
+        service.createProduct(jwt.getSubject(), productDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Override
-    public ResponseEntity<Void> deleteProduct(String id) {
-        service.deleteProduct(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@AuthenticationPrincipal Jwt jwt, @PathVariable String id) {
+        service.deleteProduct(jwt.getSubject(), id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @Override
-    public ResponseEntity<ProductDto> updateProduct(String id, ProductRequestDto productRequestDto) {
-        return ResponseEntity.ok(service.updateProduct(id, productRequestDto));
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDto> updateProduct(@AuthenticationPrincipal Jwt jwt,
+                                                    @PathVariable String id,
+                                                    @RequestBody ProductRequestDto productRequestDto) {
+        return ResponseEntity.ok(service.updateProduct(jwt.getSubject(), id, productRequestDto));
     }
 
 }

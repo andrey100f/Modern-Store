@@ -1,6 +1,7 @@
 package com.ubb.auth.model;
 
 import com.ubb.auth.domain.UserId;
+import com.ubb.auth.model.embedded.CartItem;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -28,5 +29,11 @@ public class User {
 
     @Field(name = UserId.ROLES)
     private List<String> roles;
+
+    @Field(name = UserId.WISHLIST)
+    private List<Product> wishlist;
+
+    @Field(name = UserId.CART)
+    private List<CartItem> cart;
 
 }

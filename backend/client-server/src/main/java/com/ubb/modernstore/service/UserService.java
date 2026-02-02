@@ -185,8 +185,8 @@ public class UserService {
             }
         });
 
-        repository.save(user);
-        publishAuditLog("WISHLIST_MOVE_TO_CART", userId, null);
+        var savedUser = repository.save(user);
+        publishAuditLog("WISHLIST_MOVE_TO_CART", userId, savedUser.getId());
     }
 
     private User getById(String id) {

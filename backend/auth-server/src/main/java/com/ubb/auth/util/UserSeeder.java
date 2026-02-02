@@ -25,10 +25,23 @@ public class UserSeeder implements CommandLineRunner {
                 .username("admin")
                 .email("system@admin.com")
                 .password(passwordEncoder.encode("admin"))
-                .roles(List.of("USER"))
+                .roles(List.of("ADMIN", "USER"))
                 .build();
 
             userRepository.save(adminUser);
+        }
+
+        user = userRepository.findByEmail("andrei@example.com");
+
+        if (user.isEmpty()) {
+            var nonAdminUser = User.builder()
+                .username("andrei")
+                .email("andrei@example.com")
+                .password(passwordEncoder.encode("andrey100f"))
+                .roles(List.of("USER"))
+                .build();
+
+            userRepository.save(nonAdminUser);
         }
     }
 

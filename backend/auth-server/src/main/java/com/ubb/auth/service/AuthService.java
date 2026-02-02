@@ -5,6 +5,8 @@ import com.ubb.auth.exception.EntityNotFoundException;
 import com.ubb.auth.model.User;
 
 import com.ubb.auth.repository.UserRepository;
+import com.ubb.auth.service.audit.AuditLogPublisher;
+import com.ubb.modernstore.openapi.model.AuditLogDto;
 import com.ubb.modernstore.openapi.model.LoginResponseDto;
 import com.ubb.modernstore.openapi.model.RegisterRequestDto;
 import com.ubb.modernstore.openapi.model.LoginRequestDto;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -21,6 +24,7 @@ public class AuthService {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
     private final JwtService jwtService;
+    private final AuditLogPublisher auditPublisher;
 
     public void register(RegisterRequestDto registerRequestDto) {
         var user = User.builder()
@@ -30,7 +34,8 @@ public class AuthService {
                 .roles(List.of("USER"))
                 .build();
 
-        repository.save(user);
+        var savedUser = repository.save(user);
+        publishAuditLog("USER_REGISTERED", savedUser.getId(), savedUser.getId());
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
@@ -45,6 +50,17 @@ public class AuthService {
         response.setToken(jwtService.generateToken(user));
 
         return response;
+    }
+
+    private void publishAuditLog(String eventType, String userId, String entityId) {
+        var auditLog = new AuditLogDto();
+        auditLog.setEventType(eventType);
+        auditLog.setEntityType("User");
+        auditLog.setTimestamp(Instant.now().toString());
+        auditLog.setUserId(userId);
+        auditLog.setEntityId(entityId);
+
+        auditPublisher.publish(auditLog);
     }
 
 }

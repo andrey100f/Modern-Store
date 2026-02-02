@@ -9,5 +9,4 @@
          http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
 
     <include file="db/data/data-changelog.xml" />
-    <include file="db/init/init-changelog.xml" />
 </databaseChangeLog>
