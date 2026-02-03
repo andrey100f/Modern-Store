@@ -189,6 +189,10 @@ public class UserService {
         publishAuditLog("WISHLIST_MOVE_TO_CART", userId, savedUser.getId());
     }
 
+    public Integer getUserCount() {
+        return Long.valueOf(repository.count()).intValue();
+    }
+
     private User getById(String id) {
         return repository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), id));
@@ -200,6 +204,7 @@ public class UserService {
         auditLog.setTimestamp(Instant.now().toString());
         auditLog.setUserId(userId);
         auditLog.setEntityId(entityId);
+        auditLog.setEntityType(User.class.getSimpleName());
 
         auditPublisher.publish(auditLog);
     }

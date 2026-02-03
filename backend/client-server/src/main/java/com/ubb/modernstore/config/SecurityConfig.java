@@ -33,8 +33,8 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/ws/**", "/ws").permitAll()
                 .requestMatchers("/api/users/**").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/orders/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/orders/**").hasRole("USER")
@@ -74,10 +74,10 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:5173")); // Adjust as needed
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
-        configuration.setExposedHeaders(List.of("Authorization"));
+        configuration.setExposedHeaders(List.of("Authorization", "Access-Control-Allow-Credentials"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 

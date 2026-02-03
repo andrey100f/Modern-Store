@@ -35,6 +35,10 @@ public class OrderService {
             .toList();
     }
 
+    public Integer getOrderCount() {
+        return Long.valueOf(repository.count()).intValue();
+    }
+
     private void publishAuditLog(String eventType, String userId, String entityId) {
         var auditLog = new AuditLogDto();
         auditLog.setEventType(eventType);

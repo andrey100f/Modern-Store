@@ -26,6 +26,8 @@ public class UserSeeder implements CommandLineRunner {
                 .email("system@admin.com")
                 .password(passwordEncoder.encode("admin"))
                 .roles(List.of("ADMIN", "USER"))
+                .cart(List.of())
+                .wishlist(List.of())
                 .build();
 
             userRepository.save(adminUser);
@@ -39,6 +41,8 @@ public class UserSeeder implements CommandLineRunner {
                 .email("andrei@example.com")
                 .password(passwordEncoder.encode("andrey100f"))
                 .roles(List.of("USER"))
+                .cart(List.of())
+                .wishlist(List.of())
                 .build();
 
             userRepository.save(nonAdminUser);

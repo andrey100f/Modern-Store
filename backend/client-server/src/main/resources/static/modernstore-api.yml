@@ -630,6 +630,15 @@ components:
           type: string
         entityId:
           type: string
+    StoreStatsDto:
+      type: object
+      properties:
+        totalProducts:
+          type: integer
+        totalOrders:
+          type: integer
+        totalUsers:
+          type: integer
   responses:
     Unauthorized:
       description: Access token is missing or invalid
