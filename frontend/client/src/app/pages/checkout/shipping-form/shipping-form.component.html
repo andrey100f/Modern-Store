@@ -4,29 +4,29 @@
     Shipping Information
   </h2>
 
-  <form class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <form class="grid grid-cols-1 lg:grid-cols-2 gap-4" [formGroup]="form">
     <mat-form-field>
-      <input matInput type="text" placeholder="First Name" />
+      <input matInput type="text" placeholder="First Name" formControlName="firstName" />
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="text" placeholder="Last Name" />
+      <input matInput type="text" placeholder="Last Name" formControlName="lastName" />
     </mat-form-field>
 
     <mat-form-field class="col-span-2">
-      <textarea matInput type="text" placeholder="Address"></textarea>
+      <textarea matInput type="text" placeholder="Address" formControlName="address"></textarea>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="text" placeholder="City" />
+      <input matInput type="text" placeholder="City" formControlName="city" />
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="text" placeholder="State" />
+      <input matInput type="text" placeholder="State" formControlName="state" />
     </mat-form-field>
 
     <mat-form-field class="col-span-2">
-      <input matInput type="text" placeholder="Zip" />
+      <input matInput type="text" placeholder="Zip" formControlName="zip" />
     </mat-form-field>
   </form>
 </div>

@@ -1,11 +1,14 @@
 package com.ubb.modernstore.service;
 
+import com.ubb.modernstore.exception.EntityNotFoundException;
 import com.ubb.modernstore.mapper.OrderMapper;
 import com.ubb.modernstore.model.Order;
+import com.ubb.modernstore.model.User;
 import com.ubb.modernstore.openapi.model.AuditLogDto;
 import com.ubb.modernstore.openapi.model.OrderDto;
 import com.ubb.modernstore.openapi.model.OrderRequestDto;
 import com.ubb.modernstore.repository.OrderRepository;
+import com.ubb.modernstore.repository.UserRepository;
 import com.ubb.modernstore.service.audit.AuditPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
 
+    private final UserRepository userRepository;
     private final OrderRepository repository;
     private final AuditPublisher auditPublisher;
     private final OrderMapper mapper;
@@ -25,6 +29,10 @@ public class OrderService {
         var order = mapper.mapFromRequestDtoToModel(requestDto);
         order.setUserId(userId);
 
+        var user = userRepository.findById(userId)
+            .orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), userId));
+        user.setCart(List.of());
+        userRepository.save(user);
         var savedOrder = repository.save(order);
         publishAuditLog("ORDER_PLACED", userId, savedOrder.getId());
     }

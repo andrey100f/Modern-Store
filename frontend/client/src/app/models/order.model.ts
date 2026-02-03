@@ -1,9 +1,11 @@
-import {CartItem} from './cart-item.model';
-
-export type Order = {
+export interface Order {
   id: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
   userId: string;
   total: number;
-  items: CartItem[];
-  paymentStatus: 'success' | 'failure';
 }

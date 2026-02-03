@@ -164,29 +164,29 @@ export const EcommerceStore = signalStore(
       }
     },
 
-    // placeOrder: async () => {
-    //   patchState(store, { loading: true });
-    //
-    //   const user = store.user();
-    //
-    //   if (!user) {
-    //     toaster.error('Please login before placing an order');
-    //     patchState(store, { loading: false });
-    //     return;
-    //   }
-    //
-    //   const order: Order = {
-    //     id: crypto.randomUUID(),
-    //     userId: user?.id || '',
-    //     total: Math.round(store.cartItems().reduce((acc, item) => acc + item.product.price * item.quantity, 0)),
-    //     items: store.cartItems(),
-    //     paymentStatus: 'success'
-    //   };
-    //
-    //   await new Promise((resolve) => setTimeout(resolve, 1000));
-    //
-    //   patchState(store, { loading: false, cartItems: [] });
-    //   router.navigate(['/order-success']);
-    // }
+    placeOrder: async () => {
+      patchState(store, { loading: true });
+
+      const user = store.user();
+
+      if (!user) {
+        toaster.error('Please login before placing an order');
+        patchState(store, { loading: false });
+        return;
+      }
+
+      // const order: Order = {
+      //   id: crypto.randomUUID(),
+      //   userId: user?.id || '',
+      //   total: Math.round(store.cartItems().reduce((acc, item) => acc + item.product.price * item.quantity, 0)),
+      //   items: store.cartItems(),
+      //   paymentStatus: 'success'
+      // };
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      patchState(store, { loading: false, cartItems: [] });
+      router.navigate(['/order-success']);
+    }
   }))
 );

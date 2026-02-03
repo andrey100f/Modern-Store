@@ -4,4 +4,5 @@ export const environment = {
   cartApiUrl: 'http://localhost:8080/api/cart',
   usersApiUrl: 'http://localhost:8080/api/users',
   authApiUrl: 'http://localhost:8081/api/auth',
+  ordersApiUrl: 'http://localhost:8080/api/orders',
 };
