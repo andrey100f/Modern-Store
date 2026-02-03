@@ -112,7 +112,7 @@ export const links = [
     title: 'Pages',
     links: [
       {
-        name: 'orders',
+        name: 'audit-logs',
         icon: <AiOutlineShoppingCart />,
       },
     ]

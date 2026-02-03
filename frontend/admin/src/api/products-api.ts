@@ -20,7 +20,7 @@ export async function getProducts(): Promise<Product[]> {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+      throw new Error(error.response?.data?.message || 'Fetch products failed');
     } else {
       throw new Error('An unexpected error occurred');
     }

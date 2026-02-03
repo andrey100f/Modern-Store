@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import { Ecommerce, Orders } from "./pages";
+import { Ecommerce } from "./pages";
 import Login from "./pages/login/Login";
 import { AppLayout } from "./AppLayout";
 import { ProtectedRoute, PublicOnlyRoute } from "./guards/RouteGuards";
 
 import "./App.css";
+import AuditLogs from "./pages/audit-logs/AuditLogs.tsx";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             <Route element={<AppLayout />}>
               <Route path="/" element={<Navigate to="/ecommerce" replace />} />
               <Route path="/ecommerce" element={<Ecommerce />} />
-              <Route path="/orders" element={<Orders />} />
+              <Route path="/audit-logs" element={<AuditLogs />} />
             </Route>
           </Route>
 
