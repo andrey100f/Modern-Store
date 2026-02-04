@@ -1,7 +1,5 @@
 package com.ubb.modernstore.controller;
 
-import com.ubb.modernstore.aspect.ApiController;
-import com.ubb.modernstore.openapi.controller.ProductsApi;
 import com.ubb.modernstore.openapi.model.ProductDto;
 import com.ubb.modernstore.openapi.model.ProductRequestDto;
 import com.ubb.modernstore.service.ProductService;
@@ -14,24 +12,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@ApiController
+@RestController
+@RequestMapping("/api/products")
 @RequiredArgsConstructor
-public class ProductController implements ProductsApi {
+public class ProductController {
 
     private final ProductService service;
 
-    @Override
-    public ResponseEntity<List<ProductDto>> getAllProducts(String category) {
+    @GetMapping
+    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) String category) {
         return ResponseEntity.ok(service.getAllProductsByCategory(category));
     }
 
-    @Override
-    public ResponseEntity<ProductDto> getProductById(String id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable String id) {
         return ResponseEntity.ok(service.getProductById(id));
     }
 
-    @Override
-    public ResponseEntity<List<ProductDto>> getProductsByIds(List<String> ids) {
+    @PostMapping("/find-by-ids")
+    public ResponseEntity<List<ProductDto>> getProductsByIds(@RequestBody List<String> ids) {
         return ResponseEntity.ok(service.getProductsByIds(ids));
     }
 

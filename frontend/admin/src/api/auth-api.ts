@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const baseUrl = "http://localhost:8081/api/auth";
+const baseUrl = "http://modern-store.local:8081/api/auth";
 
 export async function login(email: string, password: string) {
   try {

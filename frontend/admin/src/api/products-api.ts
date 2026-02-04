@@ -1,7 +1,7 @@
 import axios from "axios";
 import type {Product} from "./types/product.ts";
 
-const baseUrl = "http://localhost:8080/api/products";
+const baseUrl = "http://modern-store.local:8080/api/products";
 
 const publicApi = axios.create({ baseURL: '/api' });
 const privateApi = axios.create({ baseURL: '/api' });

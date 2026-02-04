@@ -1,7 +1,7 @@
 import axios from "axios";
 import type {AuditLog} from "./types/audit-log.ts";
 
-const baseUrl = "http://localhost:8080/api/audit-logs";
+const baseUrl = "http://modern-store.local:8080/api/audit-logs";
 
 const api = axios.create({ baseURL: '/api' });
 

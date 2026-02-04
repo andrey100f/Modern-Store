@@ -62,7 +62,7 @@ public class ProductService {
         updatedProduct.setId(existingProduct.getId());
         var savedProduct = repository.save(updatedProduct);
 
-        publishAuditLog("PRODUCT_DELETED", userId, savedProduct.getId());
+        publishAuditLog("PRODUCT_UPDATED", userId, savedProduct.getId());
         return mapper.mapToDto(savedProduct);
     }
 
