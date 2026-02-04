@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {BaseService} from './base-service';
-import {environment} from '../../environments/environment.local';
+import {environment} from '../../environments/environment.nginx';
 import {BehaviorSubject, catchError, Observable} from 'rxjs';
 import {CartCountService} from './cart/cart-count.service';
 import {WishlistCountService} from './wishlist-count.service';

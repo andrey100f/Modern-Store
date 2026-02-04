@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseService} from './base-service';
-import {environment} from '../../environments/environment.local';
+import {environment} from '../../environments/environment.nginx';
 import {catchError, Observable} from 'rxjs';
 import {CartItem} from '../models/cart-item.model';
 import {HttpParams} from '@angular/common/http';

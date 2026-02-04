@@ -1,0 +1,10 @@
+FROM node:25-alpine
+WORKDIR /app
+
+COPY ./frontend/client/package.json ./
+
+RUN npm install
+
+COPY ./frontend/client ./
+
+CMD ["npm", "run", "start-local", "--", "--host=0.0.0.0"]

@@ -12,7 +12,7 @@ import AuditLogs from "./pages/audit-logs/AuditLogs.tsx";
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename="/admin">
         <Routes>
           <Route element={<PublicOnlyRoute />}>
             <Route path="/login" element={<Login />} />

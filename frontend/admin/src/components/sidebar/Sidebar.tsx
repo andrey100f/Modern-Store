@@ -5,8 +5,31 @@ import { MdOutlineCancel } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
 import { useStateContext } from "../../contexts/ContextProvider.tsx";
+import {FiShoppingBag} from "react-icons/fi";
+import {AiOutlineShoppingCart} from "react-icons/ai";
 
-import { links } from "../../data/dummy.tsx";
+const links = [
+  {
+    title: 'Dashboard',
+    links: [
+      {
+        name: 'ecommerce',
+        icon: <FiShoppingBag />,
+      },
+    ],
+  },
+
+  {
+    title: 'Pages',
+    links: [
+      {
+        name: 'audit-logs',
+        icon: <AiOutlineShoppingCart />,
+      },
+    ]
+  }
+];
+
 
 function Sidebar() {
   const { activeMenu, setActiveMenu, screenSize } = useStateContext();

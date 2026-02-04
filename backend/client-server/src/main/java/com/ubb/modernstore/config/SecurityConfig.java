@@ -71,7 +71,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         var configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:5173")); // Adjust as needed
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:5173", "http://modern-store.local:8080", "http://modern-store.local:5173", "https://modern-store.local")); // Adjust as needed
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
         configuration.setExposedHeaders(List.of("Authorization", "Access-Control-Allow-Credentials"));

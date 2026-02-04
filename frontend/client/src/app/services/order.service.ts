@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BaseService} from './base-service';
 import {catchError, Observable} from 'rxjs';
-import {environment} from '../../environments/environment.local';
+import {environment} from '../../environments/environment.nginx';
 import {Order} from '../models/order.model';
 
 @Injectable({
